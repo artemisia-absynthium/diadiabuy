@@ -1,0 +1,75 @@
+Casi d'uso
+
+
+Caso d'uso UC1: Consulta elenco prodotti
+
+Attore primario: cliente occasionale
+
+Scenario principale di successo: 
+	1.	Il cliente consulta il catalogo dei prodotti in magazzino
+	2.	Il cliente sceglie un prodotto e ne richiede i dettagli
+	3.	Il sistema mostra i dettagli del prodotto scelto al cliente
+	4.	Il cliente ripete i passi precedenti un numero indefinito di volte
+
+
+Caso d'uso UC2: Effettua ordine
+
+Attore primario: cliente
+
+Scenario principale di successo: 
+	1.	Il cliente crea un ordine
+	2.	Il cliente consulta il catalogo dei prodotti
+	3.	Il cliente sceglie un prodotto e lo aggiunge, specificandone la quantità, all'ordine
+	4.	Il cliente ripete i due passi precedenti finché necessario
+	5.	Il cliente chiude l'ordine
+	6.	Il sistema registra l'ordine
+
+Precondizioni: il cliente è identificato e autenticato
+
+
+Caso d'uso UC3: Consulta i propri ordini
+
+Attore primario: cliente
+
+Scenario principale:
+	1.	Il cliente consulta l'elenco dei propri ordini
+	2.	Il sistema mostra al cliente i propri ordini specificandone data e stato
+
+Precondizioni: il cliente è identificato e autenticato
+
+
+Caso d'uso UC4: Inserimento prodotti nel catalogo
+
+Attore primario: amministrazione
+
+Scenario principale:
+	1.	L'amministratore inserisce un nuovo prodotto nel catalogo specificandone nome, codice e prezzo, disponibilità in magazzino
+	2.	Il sistema registra il prodotto
+	3.	I punti precedenti vengono ripetuti fino a che necessario
+
+Precondizioni: l'amministratore è identificato e autenticato
+
+
+Caso d'uso UC5: Cerca fornitore
+
+Attore primario: amministrazione
+
+Scenario principale:
+	1.	L'amministratore comunica al sistema il codice di un prodotto
+	2.	Il sistema mostra all'amministratore l'elenco dei fornitori per quel prodotto
+
+Precondizioni: l'amministratore è identificato e autenticato
+
+
+Caso d'uso UC6: Aggiungi fornitore
+
+Attore primario: amministrazione
+
+Scenario principale:
+	1.	L'amministratore comunica al sistema il codice di un prodotto
+	2.	L'amministratore comunica al sistema i dati di un fornitore
+	3.	Il sistema registra associa il fornitore al prodotto
+
+Precondizioni: l'amministratore è identificato e autenticato
+
+
