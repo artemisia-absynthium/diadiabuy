@@ -8,13 +8,15 @@ public class Ordine {
 	private int id;
 	private Calendar data;
 	private String codice;
-	private Stati stato;
+	private String stato;
 	private Cliente cliente;
 	private List<RigaOrdine> righeOrdine;
 
-	private enum Stati {
-		APERTO, CHIUSO, EVASO
-	};
+	interface Stati {
+		public static final String APERTO = "aperto";
+		public static final String CHIUSO = "chiuso";
+		public static final String EVASO = "evaso";
+	}
 
 	public Ordine() {
 		this.setRigheOrdine(new LinkedList<RigaOrdine>());
@@ -45,8 +47,12 @@ public class Ordine {
 		this.codice = codice;
 	}
 
-	public Stati getStato() {
+	public String getStato() {
 		return stato;
+	}
+
+	public void setStato(String stato) {
+		this.stato = stato;
 	}
 
 	public void setCliente(Cliente cliente) {
