@@ -1,57 +1,75 @@
 package model;
 
-import java.math.BigDecimal;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Prodotto {
-	private int id;
+	protected int id;
 	private String nome;
 	private String codice;
 	private String descrizione;
-	private BigDecimal prezzo; //TODO: java.util.currency
+	private double prezzo;
 	private int disponibilita;
-	private Fornitore fornitore;
-	
+	private List<Fornitore> fornitori;
+
+	public Prodotto() {
+		this.fornitori = new LinkedList<Fornitore>();
+	}
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public String getNome() {
 		return nome;
 	}
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
 	public String getCodice() {
 		return codice;
 	}
+
 	public void setCodice(String codice) {
 		this.codice = codice;
 	}
+
 	public String getDescrizione() {
 		return descrizione;
 	}
+
 	public void setDescrizione(String descrizione) {
 		this.descrizione = descrizione;
 	}
-	public BigDecimal getPrezzo() {
+
+	public double getPrezzo() {
 		return prezzo;
 	}
-	public void setPrezzo(BigDecimal prezzo) {
+
+	public void setPrezzo(double prezzo) {
 		this.prezzo = prezzo;
 	}
+
 	public int getDisponibilita() {
 		return disponibilita;
 	}
+
 	public void setDisponibilita(int disponibilita) {
 		this.disponibilita = disponibilita;
 	}
-	public void setFornitore(Fornitore fornitore) {
-		this.fornitore = fornitore;
+
+	public List<Fornitore> getFornitori() {
+		return this.fornitori;
 	}
-	public Fornitore getFornitore() {
-		return fornitore;
+
+	public void setFornitori(List<Fornitore> fornitori) {
+		this.fornitori = fornitori;
 	}
 
 }
