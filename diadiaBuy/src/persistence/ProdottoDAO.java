@@ -10,4 +10,8 @@ public interface ProdottoDAO {
 	
 	public void persist(Prodotto prodotto) throws PersistenceException;
 
+	public Prodotto doRetrieveProdottoById(int idProdotto) throws PersistenceException;
+	
+	public Prodotto doRetrieveProdottoByCodice(String codiceProdotto) throws PersistenceException;
+
 }
