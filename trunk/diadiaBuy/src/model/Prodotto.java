@@ -9,11 +9,20 @@ public class Prodotto {
 	private String codice;
 	private String descrizione;
 	private double prezzo;
-	private int disponibilita;
+	private int disponibilita;	//TODO: ridurre la disponibilità alla chiusura dell'ordine
 	private List<Fornitore> fornitori;
 
 	public Prodotto() {
 		this.fornitori = new LinkedList<Fornitore>();
+	}
+	
+	public Prodotto(String nome, String codice, String descrizione, double prezzo, int disponibilita) {
+		this();
+		this.nome = nome;
+		this.codice = codice;
+		this.descrizione = descrizione;
+		this.prezzo = prezzo;
+		this.disponibilita = disponibilita;
 	}
 
 	public int getId() {
@@ -70,6 +79,18 @@ public class Prodotto {
 
 	public void setFornitori(List<Fornitore> fornitori) {
 		this.fornitori = fornitori;
+	}
+
+	public void aggiungiFornitore(Fornitore fornitore) {
+		this.fornitori.add(fornitore);
+	}
+
+	@Override
+	public String toString() {
+		return "Prodotto [id=" + id + ", codice=" + codice + ", nome=" + nome
+				+ ", prezzo=" + prezzo + ", disponibilita=" + disponibilita
+				+ ", descrizione=" + descrizione + ", fornitori=" + fornitori
+				+ "]";
 	}
 
 }

@@ -5,6 +5,16 @@ public class Fornitore {
 	private String nome;
 	private String indirizzo;
 	private String telefono;
+	
+	public Fornitore() {
+		/* bean */
+	}
+
+	public Fornitore(String nome, String indirizzo, String telefono) {
+		this.nome = nome;
+		this.indirizzo = indirizzo;
+		this.telefono = telefono;
+	}
 
 	public int getId() {
 		return id;
@@ -36,6 +46,12 @@ public class Fornitore {
 
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
+	}
+
+	@Override
+	public String toString() {
+		return "Fornitore [id=" + id + ", nome=" + nome + ", indirizzo="
+				+ indirizzo + ", telefono=" + telefono + "]";
 	}
 
 }

@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class DataSource {
 
-	private String dbURI = "jdbc:postgresql://localhost:5432/diadiabuy";
+	private String dbURI = "jdbc:postgresql://192.168.16.71:5432/diadiabuy";
 	private String userName = "postgres";
 	private String password = "pippo";
 

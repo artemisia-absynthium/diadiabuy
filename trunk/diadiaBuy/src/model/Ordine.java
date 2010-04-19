@@ -9,7 +9,7 @@ public class Ordine {
 	private Calendar data;
 	private String codice;
 	private String stato;
-	private Cliente cliente;
+	private Utente cliente;
 	private List<RigaOrdine> righeOrdine;
 
 	interface Stati {
@@ -19,8 +19,15 @@ public class Ordine {
 	}
 
 	public Ordine() {
-		this.setRigheOrdine(new LinkedList<RigaOrdine>());
+		/* bean */
+	}
+	
+	Ordine(Utente cliente, String codice) {
+		this.righeOrdine = new LinkedList<RigaOrdine>();
+		this.codice = codice;
+		this.cliente = cliente;
 		this.stato = Stati.APERTO;
+		this.data = Calendar.getInstance();
 	}
 
 	public int getId() {
@@ -55,11 +62,11 @@ public class Ordine {
 		this.stato = stato;
 	}
 
-	public void setCliente(Cliente cliente) {
+	public void setCliente(Utente cliente) {
 		this.cliente = cliente;
 	}
 
-	public Cliente getCliente() {
+	public Utente getCliente() {
 		return cliente;
 	}
 
@@ -77,6 +84,19 @@ public class Ordine {
 
 	public void evadi() {
 		this.stato = Stati.EVASO;
+	}
+
+	public RigaOrdine aggiungiProdotto(Prodotto prodotto, int quantita) {
+		RigaOrdine rigaOrdine = new RigaOrdine(this, prodotto, quantita, this.righeOrdine.size() + 1);//sarà il prossimo
+		this.righeOrdine.add(rigaOrdine);
+		return rigaOrdine;
+	}
+
+	@Override
+	public String toString() {
+		return "Ordine [cliente=" + cliente + ", id=" + id + ", codice="
+				+ codice + ", data=" + data + ", stato=" + stato
+				+ ", righeOrdine=" + righeOrdine + "]";
 	}
 
 }
