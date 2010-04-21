@@ -1,10 +1,10 @@
 package persistence.postgres;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
@@ -39,7 +39,7 @@ public class OrdineDAOpostgres implements OrdineDAO {
 		ordine.setId(result.getInt("id_ordine"));
 		ordine.setCodice(result.getString("codice"));
 		Calendar dataOrdine = Calendar.getInstance();
-		dataOrdine.setTime(result.getDate("data"));
+		dataOrdine.setTime(result.getTimestamp("data"));
 		ordine.setStato(result.getString("stato"));
 		ordine.setData(dataOrdine);
 		List<RigaOrdine> righeOrdine = new LinkedList<RigaOrdine>();
@@ -92,7 +92,7 @@ public class OrdineDAOpostgres implements OrdineDAO {
 			statement.setInt(1, ordine.getId());
 			statement.setString(2, ordine.getCodice());
 			statement.setString(3, ordine.getStato());
-			statement.setDate(4, new Date(ordine.getData().getTimeInMillis()));
+			statement.setTimestamp(4, new Timestamp(ordine.getData().getTimeInMillis()));
 			statement.setInt(5, ordine.getCliente().getId());
 			statement.execute();
 			for (RigaOrdine riga : ordine.getRigheOrdine())
