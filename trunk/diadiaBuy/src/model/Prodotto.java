@@ -9,7 +9,7 @@ public class Prodotto {
 	private String codice;
 	private String descrizione;
 	private double prezzo;
-	private int disponibilita;	//TODO: ridurre la disponibilità alla chiusura dell'ordine
+	protected int disponibilita;
 	private List<Fornitore> fornitori;
 
 	public Prodotto() {
@@ -70,6 +70,8 @@ public class Prodotto {
 	}
 
 	public void setDisponibilita(int disponibilita) {
+		if (disponibilita < 0)
+			throw new IllegalArgumentException("La disponibilita' non puo' essere negativa");
 		this.disponibilita = disponibilita;
 	}
 

@@ -79,7 +79,23 @@ public class Ordine {
 	}
 
 	public void chiudi() {
+		if (!canUpdateAllRigheOrdine())
+			throw new IllegalStateException("Impossibile chiudere l'ordine. " +
+					"Non tutti i prodotti sono disponibili in magazzino");
+		updateAllRigheOrdine();
 		this.stato = Stati.CHIUSO;
+	}
+
+	private void updateAllRigheOrdine() {
+		for (RigaOrdine riga : this.getRigheOrdine())
+			riga.updateAvailability();
+	}
+
+	private boolean canUpdateAllRigheOrdine() {
+		for (RigaOrdine riga : this.getRigheOrdine())
+			if (!riga.canUpdateAvailability())
+				return false;
+		return true;
 	}
 
 	public void evadi() {
@@ -87,7 +103,7 @@ public class Ordine {
 	}
 
 	public RigaOrdine aggiungiProdotto(Prodotto prodotto, int quantita) {
-		RigaOrdine rigaOrdine = new RigaOrdine(this, prodotto, quantita, this.righeOrdine.size() + 1);//sarà il prossimo
+		RigaOrdine rigaOrdine = new RigaOrdine(this, prodotto, quantita, this.righeOrdine.size() + 1, prodotto.getNome());//sarà il prossimo
 		this.righeOrdine.add(rigaOrdine);
 		return rigaOrdine;
 	}
@@ -95,7 +111,7 @@ public class Ordine {
 	@Override
 	public String toString() {
 		return "Ordine [cliente=" + cliente + ", id=" + id + ", codice="
-				+ codice + ", data=" + data + ", stato=" + stato
+				+ codice + ", data=" + data.getTime() + ", stato=" + stato
 				+ ", righeOrdine=" + righeOrdine + "]";
 	}
 
