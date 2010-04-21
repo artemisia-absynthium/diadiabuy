@@ -5,6 +5,7 @@ public class RigaOrdine {
 	private int id;
 	private int quantita;
 	private int numeroDiRiga;
+	private String nomeProdotto;
 
 	private Prodotto prodotto;
 	private Ordine ordine;
@@ -13,11 +14,12 @@ public class RigaOrdine {
 		/* bean */
 	}
 	
-	RigaOrdine(Ordine ordine, Prodotto prodotto, int quantita, int numeroDiRiga) {
+	RigaOrdine(Ordine ordine, Prodotto prodotto, int quantita, int numeroDiRiga, String nomeProdotto) {
 		this.ordine = ordine;
 		this.quantita = quantita;
 		this.prodotto = prodotto;
 		this.numeroDiRiga = numeroDiRiga;
+		this.nomeProdotto = nomeProdotto;
 	}
 
 	public int getId() {
@@ -52,6 +54,14 @@ public class RigaOrdine {
 		this.numeroDiRiga = numeroDiRiga;
 	}
 	
+	public void setNomeProdotto(String nomeProdotto) {
+		this.nomeProdotto = nomeProdotto;
+	}
+
+	public String getNomeProdotto() {
+		return nomeProdotto;
+	}
+
 	public Ordine getOrdine() {
 		return ordine;
 	}
@@ -63,7 +73,17 @@ public class RigaOrdine {
 	@Override
 	public String toString() {
 		return "RigaOrdine [id=" + id + ", numeroDiRiga=" + numeroDiRiga
-				+ ", prodotto=" + prodotto + ", quantita=" + quantita + "]";
+				+ ", nomeProdotto=" + nomeProdotto + ", prodotto=" + prodotto + ", quantita=" + quantita + "]";
+	}
+
+	boolean canUpdateAvailability() {
+		return this.quantita <= this.getProdotto().getDisponibilita();
+	}
+	
+	void updateAvailability() {
+		if (!canUpdateAvailability())
+			throw new RuntimeException("La quantita' scelta di prodotto non e' disponibile in magazzino");
+		this.getProdotto().setDisponibilita(this.getProdotto().getDisponibilita()-this.quantita);
 	}
 
 }

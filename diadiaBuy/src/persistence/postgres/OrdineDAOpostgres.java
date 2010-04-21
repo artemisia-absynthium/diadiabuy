@@ -25,10 +25,13 @@ public class OrdineDAOpostgres implements OrdineDAO {
 	
 	private final RigaOrdineDAOpostgres rigaOrdineDAO;
 	
+	private final ProdottoDAOpostgres prodottoDAO;
+	
 	public OrdineDAOpostgres() {
 		this.dataSource = DBUtil.getDataSource();
 		this.idBroker = new IdBrokerPostgresql();
 		this.rigaOrdineDAO = new RigaOrdineDAOpostgres();
+		this.prodottoDAO = new ProdottoDAOpostgres();
 	}
 
 	Ordine newOrdineFromResultSet(ResultSet result) throws SQLException {
@@ -55,7 +58,7 @@ public class OrdineDAOpostgres implements OrdineDAO {
 
 		try {
 			String query = 	"SELECT   ordini.id_ordine, codice, stato, data, id_utente, id_prodotto, " +
-									" id_riga_ordine, quantita, numero_di_riga " +
+									" id_riga_ordine, quantita, numero_di_riga, nome_prodotto " +
 							"FROM ordini LEFT JOIN righe_ordine ON ordini.id_ordine = righe_ordine.id_ordine " +
 							"WHERE id_utente = ? " +
 							"ORDER BY id_ordine, numero_di_riga";
@@ -66,10 +69,6 @@ public class OrdineDAOpostgres implements OrdineDAO {
 			List<Ordine> ordini = new LinkedList<Ordine>();
 			while(!endOfResult && result.next()) {
 				Ordine ordine = this.newOrdineFromResultSet(result);
-//				while(!endOfResult && ordine.getId() == result.getInt("id_ordine")) {
-//					this.rigaOrdineDAO.newRigaOrdine(result);
-//					endOfResult = result.next();
-//				}
 				ordini.add(ordine);
 			}
 			return ordini;
@@ -96,15 +95,17 @@ public class OrdineDAOpostgres implements OrdineDAO {
 			statement.setDate(4, new Date(ordine.getData().getTimeInMillis()));
 			statement.setInt(5, ordine.getCliente().getId());
 			statement.execute();
+			for (RigaOrdine riga : ordine.getRigheOrdine())
+				this.prodottoDAO.updateAvailability(riga.getProdotto());
 		} catch (SQLException e) {
 			throw new PersistenceException("Impossibile inserire salvare l'ordine.", e);
 		} finally {
 			DBUtil.silentClose(connection, statement, result);
 		}
-		System.out.println("Ordine salvato correttamnte... adesso salvataggio righe ordine.");
 		for (RigaOrdine rigaOrdine : ordine.getRigheOrdine()) {
 			this.rigaOrdineDAO.persist(rigaOrdine);
 		}
+		System.out.println("Ordine salvato correttamente.");
 	}
 	
 }

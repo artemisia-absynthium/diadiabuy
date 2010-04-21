@@ -65,7 +65,7 @@ public class DiadiaBuyFacade {
 			this.utenteDAO.persist(utente);
 			return true;
 		} catch (PersistenceException e) {
-			System.err.println("Creazione dell' Utente" + utente + " fallita.");
+			System.err.println("Creazione dell'Utente " + utente + " fallita.");
 			e.printStackTrace();
 			return false;
 		}
@@ -96,6 +96,9 @@ public class DiadiaBuyFacade {
 	
 	public void registraOrdine(Ordine ordine) {
 		try {
+			for (RigaOrdine riga : ordine.getRigheOrdine()) {
+				this.prodottoDAO.updateAvailability(riga.getProdotto());
+			}
 			this.ordineDAO.persist(ordine);
 		} catch (PersistenceException e) {
 			System.err.println("Impossibile creare l'ordine.");
@@ -109,7 +112,7 @@ public class DiadiaBuyFacade {
 			List<Fornitore> fornitori = this.fornitoriDAO.doRetrieveFornitoryByCodiceProdotto(codiceProdotto);
 			return fornitori;
 		} catch (PersistenceException e) {
-			System.err.println("Impossibile creare l'ordine.");
+			System.err.println("Impossibile trovare i fornitori.");
 			e.printStackTrace();
 			return null;
 		}
@@ -129,7 +132,7 @@ public class DiadiaBuyFacade {
 			this.fornitoriDAO.persistFornitura(fornitore, prodotto);
 			return true;
 		} catch (PersistenceException e) {
-			System.err.println("Impossibile creare l'ordine.");
+			System.err.println("Impossibile aggiungere il fornitore.");
 			e.printStackTrace();
 			return false;
 		}

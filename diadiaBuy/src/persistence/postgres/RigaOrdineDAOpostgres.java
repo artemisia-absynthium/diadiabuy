@@ -29,6 +29,7 @@ public class RigaOrdineDAOpostgres implements RigaOrdineDAO {
 		rigaOrdine.setQuantita(result.getInt("quantita"));
 		rigaOrdine.setNumeroDiRiga(result.getInt("numero_di_riga"));
 		rigaOrdine.setIdProdotto(result.getInt("id_prodotto"));
+		rigaOrdine.setNomeProdotto(result.getString("nome_prodotto"));
 		rigaOrdine.setOrdine(ordine);
 		return rigaOrdine;
 	}
@@ -40,14 +41,15 @@ public class RigaOrdineDAOpostgres implements RigaOrdineDAO {
 		ResultSet result = null;
 
 		try {
-			String query = "INSERT INTO righe_ordine (id_riga_ordine, numero_di_riga, quantita, id_prodotto, id_ordine) VALUES " +
-											 		"(?,               ?,              ?,        ?,          ?)";
+			String query = "INSERT INTO righe_ordine (id_riga_ordine, numero_di_riga, quantita, id_prodotto, id_ordine, nome_prodotto) VALUES " +
+											 		"(?,               ?,              ?,        ?,          ?,         ?)";
 			statement = connection.prepareStatement(query);
 			statement.setInt(1, rigaOrdine.getId());
 			statement.setInt(2, rigaOrdine.getNumeroDiRiga());
 			statement.setInt(3, rigaOrdine.getQuantita());
 			statement.setInt(4, rigaOrdine.getProdotto().getId());
 			statement.setInt(5, rigaOrdine.getOrdine().getId());
+			statement.setString(6, rigaOrdine.getProdotto().getNome());
 			statement.execute();
 		} catch (SQLException e) {
 			throw new PersistenceException("Impossibile inserire salvare il prodotto.", e);

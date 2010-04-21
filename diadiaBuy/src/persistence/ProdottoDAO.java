@@ -14,4 +14,6 @@ public interface ProdottoDAO {
 	
 	public Prodotto doRetrieveProdottoByCodice(String codiceProdotto) throws PersistenceException;
 
+	public void updateAvailability(Prodotto prodotto) throws PersistenceException;
+
 }

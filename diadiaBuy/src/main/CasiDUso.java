@@ -22,6 +22,7 @@ public class CasiDUso {
 			3.	Il sistema mostra i dettagli del prodotto scelto al cliente
 			4.	Il cliente ripete i passi precedenti un numero indefinito di volte
 		 */
+		System.out.println("UC1: Consulta Elenco Prodotti");
 		List<Prodotto> catalogo = DIADIABUY_FACADE.getCatalogo();
 		System.out.println(catalogo);
 		Prodotto prodotto = catalogo.get(3);
@@ -37,6 +38,7 @@ public class CasiDUso {
 			5.	Il cliente chiude l'ordine
 			6.	Il sistema registra l'ordine
 		 */
+		System.out.println("UC2: Effettua Ordine");
 		Utente pippo = DIADIABUY_FACADE.getUtente("pippo");
 		Ordine ordine = pippo.newOrdine("Ordine_PIPPO_1");
 		List<Prodotto> catalogo = DIADIABUY_FACADE.getCatalogo();
@@ -44,6 +46,7 @@ public class CasiDUso {
 		ordine.aggiungiProdotto(catalogo.get(1), 1);
 		ordine.chiudi();
 		DIADIABUY_FACADE.registraOrdine(ordine);
+		System.out.println(catalogo);
 	}
 	
 	public static void casoUC3_ConsultaIPropriOrdini() {
@@ -51,6 +54,7 @@ public class CasiDUso {
 			1.	Il cliente consulta l'elenco dei propri ordini
 			2.	Il sistema mostra al cliente i propri ordini specificandone data e stato
 		 */
+		System.out.println("UC3: Consulta I Propri Ordini");
 		Utente pippo = DIADIABUY_FACADE.getUtente("pippo");
 		for (Ordine ordine : pippo.getOrdini()) {
 			System.out.println(ordine);
@@ -63,6 +67,7 @@ public class CasiDUso {
 			2.	Il sistema registra il prodotto
 			3.	I punti precedenti vengono ripetuti fino a che necessario
 		 */
+		System.out.println("UC4: Inserimento Prodotti Nel Catalogo");
 		Utente admin = DIADIABUY_FACADE.getUtente("admin");
 		Prodotto pda_1 = new Prodotto("Prodotto_da_admin_1", "PDA_1", "Prodotto inserito dall'amministrazione 1.", 3.4, 12);
 		Prodotto pda_2 = new Prodotto("Prodotto_da_admin_2", "PDA_2", "Prodotto inserito dall'amministrazione 2.", 0, 0);
@@ -70,6 +75,7 @@ public class CasiDUso {
 		DIADIABUY_FACADE.newProdotto(admin, pda_1);
 		DIADIABUY_FACADE.newProdotto(admin, pda_2);
 		DIADIABUY_FACADE.newProdotto(admin, pda_3);
+		System.out.println(DIADIABUY_FACADE.getCatalogo());
 	}
 	
 	public static void casoUC5_CercaFornitore() {
@@ -77,6 +83,7 @@ public class CasiDUso {
 			1.	L'amministratore comunica al sistema il codice di un prodotto
 			2.	Il sistema mostra all'amministratore l'elenco dei fornitori per quel prodotto
 		 */
+		System.out.println("UC5: Cerca Fornitore");
 		Utente admin = DIADIABUY_FACADE.getUtente("admin");
 		Collection<Fornitore> fornitori = DIADIABUY_FACADE.getFornitoreByCodiceProdotto(admin, "PD_1");
 		System.out.println(fornitori);
@@ -88,6 +95,7 @@ public class CasiDUso {
 			2.	L'amministratore comunica al sistema i dati di un fornitore
 			3.	Il sistema registra associa il fornitore al prodotto
 		 */
+		System.out.println("UC6: Aggiungi Fornitore");
 		Utente admin = DIADIABUY_FACADE.getUtente("admin");
 		Fornitore fa_1 = new Fornitore("Fornitore_UC6", "Via Dei Campolli Ruspanti 6", "0000");
 		DIADIABUY_FACADE.newFornitore(admin, fa_1);

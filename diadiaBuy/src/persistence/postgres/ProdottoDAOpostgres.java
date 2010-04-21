@@ -65,7 +65,7 @@ public class ProdottoDAOpostgres implements ProdottoDAO {
 		try {
 			String query = "INSERT INTO prodotti " +
 								"(id_prodotto, codice, nome, disponibilita, prezzo, descrizione) VALUES " +
-								"(?,  ?,      ?,    ?,             ?,      ?)";
+								"(?,           ?,      ?,    ?,             ?,      ?)";
 			statement = connection.prepareStatement(query);
 			statement.setInt(1, prodotto.getId());
 			statement.setString(2, prodotto.getCodice());
@@ -143,6 +143,25 @@ public class ProdottoDAOpostgres implements ProdottoDAO {
 			return result.getString("descrizione");
 		} catch (SQLException e) {
 			throw new PersistenceException("Impossibile visualizzare la descrizione", e);
+		} finally {
+			DBUtil.silentClose(connection, statement, result);
+		}
+	}
+
+	public void updateAvailability(Prodotto prodotto) throws PersistenceException {
+		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet result = null;
+		String query = "UPDATE prodotti SET disponibilita = ? " +
+						"WHERE id_prodotto = ?";
+		try {
+			connection = this.dataSource.getConnection();
+			statement = connection.prepareStatement(query);
+			statement.setInt(1, prodotto.getDisponibilita());
+			statement.setInt(2, prodotto.getId());
+			statement.execute();
+		} catch (SQLException e) {
+			throw new PersistenceException("Impossibile aggiornare la disponibilita'", e);
 		} finally {
 			DBUtil.silentClose(connection, statement, result);
 		}
