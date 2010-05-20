@@ -8,6 +8,7 @@ public class ProxyLoadingException extends RuntimeException {
 	private static final long serialVersionUID = -1195319384664490112L;
 
 	public ProxyLoadingException() {
+		/* Nothing to do */
 	}
 
 	public ProxyLoadingException(String arg0) {

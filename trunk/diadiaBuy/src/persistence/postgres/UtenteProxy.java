@@ -23,6 +23,7 @@ public class UtenteProxy extends Utente {
 		this.ordineDao = new OrdineDAOpostgres();
 	}
 
+	@Override
 	public List<Ordine> getOrdini() {
 		if (!this.ordiniCaricati) {
 			try {
