@@ -8,6 +8,7 @@ public class PersistenceException extends Exception {
 	private static final long serialVersionUID = -1599657320086784562L;
 
 	public PersistenceException() {
+		/* Nothing to do */
 	}
 
 	public PersistenceException(String arg0) {
