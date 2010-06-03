@@ -10,12 +10,14 @@
 </head>
 <body>
 
-<% List<Prodotto> prodotti = (List<Prodotto>) request.getAttribute("prodotti");
-	//FIXME Unchecked cast %>
+<% List<Prodotto> prodotti = (List<Prodotto>) request.getAttribute("prodotti"); %>
 
 <% for (Prodotto p : prodotti) { %>
 	<h1><%= p.getNome() %></h1>
-	<div><%= p.getPrezzo() %> euro<br />Disponibilità: <%= p.getDisponibilita() %></div>
+	<div><%= p.getPrezzo() %> euro<br />Disponibilità: <%= p.getDisponibilita() %>
+		<br /><form action="/diadiaBuy/dettagli.do" method="post">
+		<input type="hidden" value="<%= p.getId() %>" name="product_id" />
+		<input type="submit" value="Dettagli" /></form></div>
 <% } %>
 
 </body>
