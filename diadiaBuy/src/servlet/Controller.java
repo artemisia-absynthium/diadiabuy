@@ -89,9 +89,12 @@ public class Controller extends HttpServlet {
 	public void init() {
 		this.comando2azione = new HashMap<String, String>();
 		this.comando2azione.put("consulta_prodotti", "servlet.ConsultaProdotti");
+		this.comando2azione.put("dettagli", "servlet.DettagliProdotto");
 		this.esito2pagina = new HashMap<String, String>();
 		this.esito2pagina.put("listaNonCreata", "/error.jsp");
 		this.esito2pagina.put("listaCreata", "/catalogo.jsp");
+		this.esito2pagina.put("noDescrizione", "/error.jsp");
+		this.esito2pagina.put("descrizioneOK", "/descrizione.jsp");
 	}
 
 }
