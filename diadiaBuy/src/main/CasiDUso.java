@@ -9,13 +9,14 @@ import model.Fornitore;
 import model.Ordine;
 import model.Prodotto;
 import model.Utente;
+import persistence.PersistenceException;
 import persistence.postgres.DBUtil;
 
 public class CasiDUso {
 	
 	private static final DiadiaBuyFacade DIADIABUY_FACADE = DiadiaBuyFacade.getInstance();
 	
-	public static void casoUC1_ConsultaElencoProdotti() {
+	public static void casoUC1_ConsultaElencoProdotti() throws PersistenceException {
 		/*
 		 	1.	Il cliente consulta il catalogo dei prodotti in magazzino
 			2.	Il cliente sceglie un prodotto e ne richiede i dettagli
@@ -29,7 +30,7 @@ public class CasiDUso {
 		System.out.println(prodotto.getDescrizione());
 	}
 	
-	public static void casoUC2_EffettuaOrdine() {
+	public static void casoUC2_EffettuaOrdine() throws PersistenceException {
 		/*
 		 	1.	Il cliente crea un ordine
 			2.	Il cliente consulta il catalogo dei prodotti
@@ -61,7 +62,7 @@ public class CasiDUso {
 		}
 	}
 	
-	public static void casoUC4_InserimentoProdottiNelCatalogo() {
+	public static void casoUC4_InserimentoProdottiNelCatalogo() throws PersistenceException {
 		/*
 			1.	L'amministratore inserisce un nuovo prodotto nel catalogo specificandone nome, codice e prezzo, disponibilità in magazzino
 			2.	Il sistema registra il prodotto
@@ -102,7 +103,7 @@ public class CasiDUso {
 		DIADIABUY_FACADE.aggiungiFornitore(admin, "PD_3", fa_1);
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws PersistenceException {
 		init();
 		casoUC1_ConsultaElencoProdotti();
 		casoUC2_EffettuaOrdine();
@@ -114,8 +115,8 @@ public class CasiDUso {
 
 	private static void init() {
 		resetTable();
-		Utente admin = new Utente("admin", Utente.Ruolo.AMMINISTRATORE);
-		Utente pippo = new Utente("pippo", Utente.Ruolo.REGISTRATO);
+		Utente admin = new Utente("admin", "admin", Utente.Ruolo.AMMINISTRATORE);
+		Utente pippo = new Utente("pippo", "pluto", Utente.Ruolo.REGISTRATO);
 		DIADIABUY_FACADE.newUtente(pippo);
 		DIADIABUY_FACADE.newUtente(admin);
 		

@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 import model.Utente;
 import persistence.DataSource;
 import persistence.IdBroker;
@@ -29,12 +31,13 @@ public class UtenteDAOpostgres implements UtenteDAO {
 		ResultSet result = null;
 		try {
 			String query = "INSERT INTO utenti " +
-								"(id_utente, username, ruolo) VALUES " +
-								"(?,  		 ?,        ?)";
+								"(id_utente, username, password, ruolo) VALUES " +
+								"(?,  		 ?,        ?,        ?)";
 			statement = connection.prepareStatement(query);
 			statement.setInt(1, utente.getId());
 			statement.setString(2, utente.getUsername());
-			statement.setString(3, utente.getRuolo());
+			statement.setString(3, DigestUtils.md5Hex(utente.getPassword()));
+			statement.setString(4, utente.getRuolo());
 			statement.execute();
 		} catch (SQLException e) {
 			throw new PersistenceException("Impossibile inserire/salvare l'utente.", e);
@@ -48,7 +51,7 @@ public class UtenteDAOpostgres implements UtenteDAO {
 		PreparedStatement statement = null;
 		ResultSet result = null;
 		try {
-			String query = 	"SELECT id_utente, username, ruolo " +
+			String query = 	"SELECT id_utente, username, password, ruolo " +
 							"FROM utenti " +
 							"WHERE username = ?";
 			statement = connection.prepareStatement(query);
@@ -68,6 +71,7 @@ public class UtenteDAOpostgres implements UtenteDAO {
 		Utente utente = new UtenteProxy();
 		utente.setId(result.getInt("id_utente"));
 		utente.setUsername(result.getString("username"));
+		utente.setPassword(result.getString("password"));
 		utente.setRuolo(result.getString("ruolo"));
 		return utente;
 	}

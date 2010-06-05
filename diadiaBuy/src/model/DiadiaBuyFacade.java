@@ -2,6 +2,8 @@ package model;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import persistence.FornitoriDAO;
 import persistence.OrdineDAO;
 import persistence.PersistenceException;
@@ -84,14 +86,14 @@ public class DiadiaBuyFacade {
 		}
 	}
 	
-	public List<Prodotto> getCatalogo() {
-		try {
-			return this.prodottoDAO.doRetrieveAll();
-		} catch (PersistenceException e) {
-			System.err.println("Impossibile prendere il Catalogo prodotti.");
-			e.printStackTrace();
-			return null;
-		}
+	public List<Prodotto> getCatalogo() throws PersistenceException {
+		return this.prodottoDAO.doRetrieveAll();
+	}
+	
+	public Prodotto getProdottoByID(int id) throws PersistenceException {
+		ProdottoDAO prodottoDAO = new ProdottoDAOpostgres();
+		Prodotto prodotto = prodottoDAO.doRetrieveProdottoById(id);
+		return prodotto;
 	}
 	
 	public void registraOrdine(Ordine ordine) {
@@ -136,6 +138,13 @@ public class DiadiaBuyFacade {
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	public Utente login(HttpServletRequest request) {
+		Utente u = this.getUtente(request.getParameter("username"));
+		if (!u.isAuthorized(request))
+			return null;
+		return u;
 	}
 
 }
