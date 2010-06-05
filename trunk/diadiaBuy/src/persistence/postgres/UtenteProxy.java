@@ -18,8 +18,8 @@ public class UtenteProxy extends Utente {
 		this.ordineDao = new OrdineDAOpostgres();
 	}
 
-	public UtenteProxy(String username, String ruolo) {
-		super(username, ruolo);
+	public UtenteProxy(String username, String password, String ruolo) {
+		super(username, password, ruolo);
 		this.ordineDao = new OrdineDAOpostgres();
 	}
 

@@ -4,23 +4,24 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import model.Prodotto;
 import persistence.PersistenceException;
-import persistence.ProdottoDAO;
-import persistence.postgres.ProdottoDAOpostgres;
 
-public class ConsultaProdotti extends Azione {
+import model.DiadiaBuyFacade;
+import model.Prodotto;
+
+public class ConsultaProdottiAction extends Azione {
 
 	@Override
 	public String esegui(HttpServletRequest request) {
-		ProdottoDAO prodottoDAO = new ProdottoDAOpostgres();
+		DiadiaBuyFacade facade = DiadiaBuyFacade.getInstance();
+		List<Prodotto> prodotti;
 		try {
-			List<Prodotto> prodotti = prodottoDAO.doRetrieveAll();
-			request.setAttribute("prodotti", prodotti);
+			prodotti = facade.getCatalogo();
 		} catch (PersistenceException e) {
 			e.printStackTrace();
 			return "listaNonCreata";
 		}
+		request.setAttribute("prodotti", prodotti);
 		return "listaCreata";
 	}
 

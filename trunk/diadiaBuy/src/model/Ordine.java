@@ -12,7 +12,7 @@ public class Ordine {
 	private Utente cliente;
 	private List<RigaOrdine> righeOrdine;
 
-	interface Stati {
+	public interface Stati {
 		public static final String APERTO = "aperto";
 		public static final String CHIUSO = "chiuso";
 		public static final String EVASO = "evaso";

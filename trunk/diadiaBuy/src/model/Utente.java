@@ -3,11 +3,17 @@ package model;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.commons.codec.digest.DigestUtils;
+
 public class Utente {
 
 	protected int id;
 	
 	private String username;
+	
+	private String password;
 	
 	private String ruolo;
 	
@@ -23,9 +29,10 @@ public class Utente {
 		/* bean */
 	}
 	
-	public Utente(String username, String ruolo) {
+	public Utente(String username, String password, String ruolo) {
 		this.ordini = new LinkedList<Ordine>();
 		this.username = username;
+		this.password = password;
 		this.ruolo = ruolo;
 	}
 
@@ -43,6 +50,14 @@ public class Utente {
 
 	public void setUsername(String username) {
 		this.username = username;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getPassword() {
+		return password;
 	}
 
 	public boolean isAdmin() {
@@ -75,6 +90,12 @@ public class Utente {
 	public String toString() {
 		return "Utente [id=" + id + ", username=" + username + ", ruolo="
 				+ ruolo + ", ordini=" + ordini + "]";
+	}
+
+	public boolean isAuthorized(HttpServletRequest request) {
+		if (!DigestUtils.md5Hex(request.getParameter("password")).equals(this.password))
+			return false;
+		return true;
 	}
 
 

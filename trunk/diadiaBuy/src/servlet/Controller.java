@@ -88,13 +88,26 @@ public class Controller extends HttpServlet {
 	@Override
 	public void init() {
 		this.comando2azione = new HashMap<String, String>();
-		this.comando2azione.put("consulta_prodotti", "servlet.ConsultaProdotti");
-		this.comando2azione.put("dettagli", "servlet.DettagliProdotto");
+		this.comando2azione.put("consulta_prodotti", "servlet.ConsultaProdottiAction");
+		this.comando2azione.put("dettagli", "servlet.DettagliProdottoAction");
+		this.comando2azione.put("registrazione", "servlet.RegistrazioneUtenteAction");
+		this.comando2azione.put("conferma_registrazione", "servlet.ConfermaRegistrazioneUtenteAction");
+		this.comando2azione.put("login", "servlet.LoginAction");
+		this.comando2azione.put("aggiungi_al_carrello", "servlet.OrdineAction");
 		this.esito2pagina = new HashMap<String, String>();
 		this.esito2pagina.put("listaNonCreata", "/error.jsp");
 		this.esito2pagina.put("listaCreata", "/catalogo.jsp");
 		this.esito2pagina.put("noDescrizione", "/error.jsp");
 		this.esito2pagina.put("descrizioneOK", "/descrizione.jsp");
+		this.esito2pagina.put("nonConvalidato", "/registrazione_utente.jsp");
+		this.esito2pagina.put("convalidato", "/conferma_registrazione_utente.jsp");
+		this.esito2pagina.put("RegistrazioneDaCorreggere", "/registrazione_utente.jsp");
+		this.esito2pagina.put("erroreRegistrazione", "/error.jsp");
+		this.esito2pagina.put("utenteRegistrato", "/utente_registrato.jsp");
+		this.esito2pagina.put("nonLoggato", "/login.jsp");
+		this.esito2pagina.put("loggato", "/index.jsp");
+		this.esito2pagina.put("prodottoNonAggiunto", "/error.jsp");
+		this.esito2pagina.put("prodottoAggiunto", "/carrello.jsp");
 	}
 
 }
