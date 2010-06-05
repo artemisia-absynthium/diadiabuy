@@ -103,9 +103,21 @@ public class Ordine {
 	}
 
 	public RigaOrdine aggiungiProdotto(Prodotto prodotto, int quantita) {
-		RigaOrdine rigaOrdine = new RigaOrdine(this, prodotto, quantita, this.righeOrdine.size() + 1, prodotto.getNome());//sarà il prossimo
-		this.righeOrdine.add(rigaOrdine);
+		RigaOrdine rigaOrdine = cercaRigaOrdine(prodotto);
+		if (rigaOrdine == null) {
+			rigaOrdine = new RigaOrdine(this, prodotto, quantita, this.righeOrdine.size() + 1, prodotto.getNome());//sarà il prossimo
+			this.righeOrdine.add(rigaOrdine);
+		} else {
+			rigaOrdine.setQuantita(rigaOrdine.getQuantita() + quantita);
+		}
 		return rigaOrdine;
+	}
+
+	private RigaOrdine cercaRigaOrdine(Prodotto prodotto) {
+		for (RigaOrdine riga : this.righeOrdine)
+			if (riga.getProdotto().equals(prodotto))
+				return riga;
+		return null;
 	}
 
 	@Override
