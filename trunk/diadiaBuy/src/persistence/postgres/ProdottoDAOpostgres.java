@@ -149,13 +149,20 @@ public class ProdottoDAOpostgres implements ProdottoDAO {
 	}
 
 	public void updateAvailability(Prodotto prodotto) throws PersistenceException {
-		Connection connection = null;
+		Connection connection = this.dataSource.getConnection();
+		try {
+			updateAvailability(connection, prodotto);
+		} finally {
+			DBUtil.silentClose(connection);
+		}
+	}
+
+	public void updateAvailability(Connection connection, Prodotto prodotto)
+			throws PersistenceException {
 		PreparedStatement statement = null;
-		ResultSet result = null;
 		String query = "UPDATE prodotti SET disponibilita = ? " +
 						"WHERE id_prodotto = ?";
 		try {
-			connection = this.dataSource.getConnection();
 			statement = connection.prepareStatement(query);
 			statement.setInt(1, prodotto.getDisponibilita());
 			statement.setInt(2, prodotto.getId());
@@ -163,7 +170,7 @@ public class ProdottoDAOpostgres implements ProdottoDAO {
 		} catch (SQLException e) {
 			throw new PersistenceException("Impossibile aggiornare la disponibilita'", e);
 		} finally {
-			DBUtil.silentClose(connection, statement, result);
+			DBUtil.silentClose(null, statement);
 		}
 	}
 	

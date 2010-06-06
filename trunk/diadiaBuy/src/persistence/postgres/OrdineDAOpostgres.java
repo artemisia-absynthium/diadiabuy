@@ -80,12 +80,21 @@ public class OrdineDAOpostgres implements OrdineDAO {
 	}
 
 	public void persist(Ordine ordine) throws PersistenceException {
-		ordine.setId(this.idBroker.newId(IdBrokerPostgresql.ORDINE_SEQUENCE_ID));
 		Connection connection = this.dataSource.getConnection();
+		try {
+			persist(connection, ordine);
+		} finally {
+			DBUtil.silentClose(connection);
+		}
+	}
+
+	public void persist(Connection connection, Ordine ordine) throws PersistenceException {
+		ordine.setId(this.idBroker.newId(IdBrokerPostgresql.ORDINE_SEQUENCE_ID));
 		PreparedStatement statement = null;
 		ResultSet result = null;
-
 		try {
+			connection.setAutoCommit(false);
+			connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
 			String query = "INSERT INTO ordini(id_ordine, codice, stato, data, id_utente) VALUES " +
 											 "(?,  		  ?,      ?,     ?,    ?)";
 			statement = connection.prepareStatement(query);
@@ -95,17 +104,26 @@ public class OrdineDAOpostgres implements OrdineDAO {
 			statement.setTimestamp(4, new Timestamp(ordine.getData().getTimeInMillis()));
 			statement.setInt(5, ordine.getCliente().getId());
 			statement.execute();
+			
 			for (RigaOrdine riga : ordine.getRigheOrdine())
-				this.prodottoDAO.updateAvailability(riga.getProdotto());
+				this.prodottoDAO.updateAvailability(connection, riga.getProdotto());
+			
+			for (RigaOrdine rigaOrdine : ordine.getRigheOrdine())
+				this.rigaOrdineDAO.persist(connection, rigaOrdine);
+			
+			connection.commit();
 		} catch (SQLException e) {
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+				throw new PersistenceException("Impossibile effettuare il rollback.", e1);
+			}
 			throw new PersistenceException("Impossibile inserire salvare l'ordine.", e);
 		} finally {
-			DBUtil.silentClose(connection, statement, result);
-		}
-		for (RigaOrdine rigaOrdine : ordine.getRigheOrdine()) {
-			this.rigaOrdineDAO.persist(rigaOrdine);
+			DBUtil.silentClose(null, statement, result);
 		}
 		System.out.println("Ordine salvato correttamente.");
 	}
-	
+
 }

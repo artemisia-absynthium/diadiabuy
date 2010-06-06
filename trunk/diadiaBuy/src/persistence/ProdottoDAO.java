@@ -1,5 +1,6 @@
 package persistence;
 
+import java.sql.Connection;
 import java.util.List;
 
 import model.Prodotto;
@@ -15,5 +16,7 @@ public interface ProdottoDAO {
 	public Prodotto doRetrieveProdottoByCodice(String codiceProdotto) throws PersistenceException;
 
 	public void updateAvailability(Prodotto prodotto) throws PersistenceException;
+	
+	public void updateAvailability(Connection connection, Prodotto prodotto) throws PersistenceException;
 
 }
