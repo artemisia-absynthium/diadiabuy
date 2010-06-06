@@ -15,22 +15,22 @@ import persistence.postgres.ProdottoDAOpostgres;
 import persistence.postgres.UtenteDAOpostgres;
 
 public class DiadiaBuyFacade {
-	
+
 	private final ProdottoDAO prodottoDAO;
-	
+
 	private final OrdineDAO ordineDAO;
-	
+
 	private final UtenteDAO utenteDAO;
-	
+
 	private final FornitoriDAO fornitoriDAO;
-	
+
 	private DiadiaBuyFacade() {
-		this.prodottoDAO = new ProdottoDAOpostgres();
 		this.ordineDAO = new OrdineDAOpostgres();
 		this.utenteDAO = new UtenteDAOpostgres();
+		this.prodottoDAO = new ProdottoDAOpostgres();
 		this.fornitoriDAO = new FornitoriDAOpostgres();
 	}
-	
+
 	private static class SingletonHolder {
 		private static final DiadiaBuyFacade INSTANCE = new DiadiaBuyFacade();
 	}
@@ -38,19 +38,20 @@ public class DiadiaBuyFacade {
 	public static DiadiaBuyFacade getInstance() {
 		return SingletonHolder.INSTANCE;
 	}
-	
+
 	public boolean newProdotto(Utente admin, Prodotto prodotto) {
 		this.onlyAdminCheck(admin);
 		try {
 			this.prodottoDAO.persist(prodotto);
 			return true;
 		} catch (PersistenceException e) {
-			System.err.println("Creazione del Prodotto " + prodotto + " fallita.");
+			System.err.println("Creazione del Prodotto " + prodotto
+					+ " fallita.");
 			e.printStackTrace();
 			return false;
 		}
 	}
-	
+
 	public Utente getUtente(String username) {
 		try {
 			Utente utente = this.utenteDAO.doRetrieveUtenteByUsername(username);
@@ -61,7 +62,7 @@ public class DiadiaBuyFacade {
 			return null;
 		}
 	}
-	
+
 	public boolean newUtente(Utente utente) {
 		try {
 			this.utenteDAO.persist(utente);
@@ -72,7 +73,6 @@ public class DiadiaBuyFacade {
 			return false;
 		}
 	}
-	
 
 	public boolean newFornitore(Utente utente, Fornitore fornitore) {
 		this.onlyAdminCheck(utente);
@@ -80,27 +80,25 @@ public class DiadiaBuyFacade {
 			this.fornitoriDAO.persist(fornitore);
 			return true;
 		} catch (PersistenceException e) {
-			System.err.println("Creazione del fornitore" + fornitore + " fallita.");
+			System.err.println("Creazione del fornitore" + fornitore
+					+ " fallita.");
 			e.printStackTrace();
 			return false;
 		}
 	}
-	
+
 	public List<Prodotto> getCatalogo() throws PersistenceException {
 		return this.prodottoDAO.doRetrieveAll();
 	}
-	
+
 	public Prodotto getProdottoByID(int id) throws PersistenceException {
 		ProdottoDAO prodottoDAO = new ProdottoDAOpostgres();
 		Prodotto prodotto = prodottoDAO.doRetrieveProdottoById(id);
 		return prodotto;
 	}
-	
+
 	public void registraOrdine(Ordine ordine) {
 		try {
-			for (RigaOrdine riga : ordine.getRigheOrdine()) {
-				this.prodottoDAO.updateAvailability(riga.getProdotto());
-			}
 			this.ordineDAO.persist(ordine);
 		} catch (PersistenceException e) {
 			System.err.println("Impossibile creare l'ordine.");
@@ -108,10 +106,12 @@ public class DiadiaBuyFacade {
 		}
 	}
 
-	public List<Fornitore> getFornitoreByCodiceProdotto(Utente admin, String codiceProdotto) {
+	public List<Fornitore> getFornitoreByCodiceProdotto(Utente admin,
+			String codiceProdotto) {
 		this.onlyAdminCheck(admin);
 		try {
-			List<Fornitore> fornitori = this.fornitoriDAO.doRetrieveFornitoryByCodiceProdotto(codiceProdotto);
+			List<Fornitore> fornitori = this.fornitoriDAO
+					.doRetrieveFornitoryByCodiceProdotto(codiceProdotto);
 			return fornitori;
 		} catch (PersistenceException e) {
 			System.err.println("Impossibile trovare i fornitori.");
@@ -121,15 +121,19 @@ public class DiadiaBuyFacade {
 	}
 
 	private void onlyAdminCheck(Utente admin) {
-		if(!admin.isAdmin())
-			throw new SecurityException("Operazione aggiungi prodotto consentita solo ad utenti amministratori." +
-						" L'utente " + admin + " non è un utente amministratore.");
+		if (!admin.isAdmin())
+			throw new SecurityException(
+					"Operazione aggiungi prodotto consentita solo ad utenti amministratori."
+							+ " L'utente " + admin
+							+ " non è un utente amministratore.");
 	}
 
-	public boolean aggiungiFornitore(Utente admin, String codiceProdotto, Fornitore fornitore) {
+	public boolean aggiungiFornitore(Utente admin, String codiceProdotto,
+			Fornitore fornitore) {
 		this.onlyAdminCheck(admin);
 		try {
-			Prodotto prodotto = this.prodottoDAO.doRetrieveProdottoByCodice(codiceProdotto);
+			Prodotto prodotto = this.prodottoDAO
+					.doRetrieveProdottoByCodice(codiceProdotto);
 			prodotto.aggiungiFornitore(fornitore);
 			this.fornitoriDAO.persistFornitura(fornitore, prodotto);
 			return true;
@@ -138,6 +142,16 @@ public class DiadiaBuyFacade {
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	public void aggiungiProdottoAlCarrello(Utente utente, int idProdotto,
+			int quantita) throws PersistenceException {
+		Ordine carrello = utente.getCarrello();
+
+		Prodotto prodotto = this.prodottoDAO.doRetrieveProdottoById(idProdotto);
+
+		carrello.aggiungiProdotto(prodotto, quantita);
+		this.ordineDAO.persist(carrello);
 	}
 
 	public Utente login(HttpServletRequest request) {

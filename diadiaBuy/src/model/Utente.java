@@ -85,6 +85,14 @@ public class Utente {
 		this.getOrdini().add(ordine);
 		return ordine;
 	}
+	
+	public Ordine getCarrello() {
+		for (Ordine o : this.ordini) {
+			if (o.getStato().equals(Ordine.Stati.APERTO))
+				return o;
+		}
+		return new Ordine();
+	}
 
 	@Override
 	public String toString() {

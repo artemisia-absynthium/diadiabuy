@@ -1,18 +1,11 @@
 package servlet;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import model.Ordine;
-import model.Prodotto;
+import model.DiadiaBuyFacade;
 import model.Utente;
-import persistence.OrdineDAO;
 import persistence.PersistenceException;
-import persistence.ProdottoDAO;
-import persistence.postgres.OrdineDAOpostgres;
-import persistence.postgres.ProdottoDAOpostgres;
 
 public class OrdineAction extends Azione {
 
@@ -20,34 +13,20 @@ public class OrdineAction extends Azione {
 	public String esegui(HttpServletRequest request) {
 		HttpSession session = request.getSession(false);
 		Utente utente = (Utente) session.getAttribute("utente");
-		List<Ordine> ordini = utente.getOrdini();
-		Ordine ordineAttuale = null;
-		for (Ordine o : ordini) {
-			if (o.getStato().equals(Ordine.Stati.APERTO))
-				ordineAttuale = o;
-		}
-		if (ordineAttuale == null)
-			ordineAttuale = new Ordine();
 		
-		int id = Integer.parseInt(request.getParameter("product_id"));
-		ProdottoDAO prodottoDAO = new ProdottoDAOpostgres();
-		Prodotto prodotto;
+		int idProdotto = Integer.parseInt(request.getParameter("product_id"));
+		int quantita = Integer.parseInt(request.getParameter("quantita"));
+		
+		DiadiaBuyFacade facade = DiadiaBuyFacade.getInstance();
 		try {
-			prodotto = prodottoDAO.doRetrieveProdottoById(id);
+			facade.aggiungiProdottoAlCarrello(utente, idProdotto, quantita);
 		} catch (PersistenceException e) {
 			e.printStackTrace();
 			return "prodottoNonAggiunto";
 		}
 		
-		ordineAttuale.aggiungiProdotto(prodotto, Integer.parseInt(request.getParameter("quantita")));
-		OrdineDAO ordineDAO = new OrdineDAOpostgres();
-		try {
-			ordineDAO.persist(ordineAttuale);
-		} catch (PersistenceException e) {
-			e.printStackTrace();
-			return "prodottoNonAggiunto";
-		}
 		return "prodottoAggiunto";
 	}
 
+	
 }

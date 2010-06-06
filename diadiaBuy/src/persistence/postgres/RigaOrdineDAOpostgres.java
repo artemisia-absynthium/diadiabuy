@@ -35,11 +35,17 @@ public class RigaOrdineDAOpostgres implements RigaOrdineDAO {
 	}
 
 	public void persist(RigaOrdine rigaOrdine) throws PersistenceException {
-		rigaOrdine.setId(this.idBroker.newId(IdBrokerPostgresql.RIGA_ORDINE_SEQUENCE_ID));
 		Connection connection = this.dataSource.getConnection();
-		PreparedStatement statement = null;
-		ResultSet result = null;
+		try {
+			this.persist(connection, rigaOrdine);
+		} finally {
+			DBUtil.silentClose(connection);
+		}
+	}
 
+	public void persist(Connection connection, RigaOrdine rigaOrdine) throws PersistenceException {
+		rigaOrdine.setId(this.idBroker.newId(IdBrokerPostgresql.RIGA_ORDINE_SEQUENCE_ID));
+		PreparedStatement statement = null;
 		try {
 			String query = "INSERT INTO righe_ordine (id_riga_ordine, numero_di_riga, quantita, id_prodotto, id_ordine, nome_prodotto) VALUES " +
 											 		"(?,               ?,              ?,        ?,          ?,         ?)";
@@ -54,7 +60,7 @@ public class RigaOrdineDAOpostgres implements RigaOrdineDAO {
 		} catch (SQLException e) {
 			throw new PersistenceException("Impossibile inserire salvare il prodotto.", e);
 		} finally {
-			DBUtil.silentClose(connection, statement, result);
+			DBUtil.silentClose(null, statement);
 		}
 	}
 	
