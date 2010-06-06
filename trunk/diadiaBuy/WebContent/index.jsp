@@ -23,6 +23,7 @@
 
 <% if (utente != null) { /* Collegamenti visibili solo agli utenti registrati */ %>
 	<a href="/diadiaBuy/carrello.do">Consulta il tuo carrello</a>
+	<a href="/diadiaBuy/ordini.do">Consulta il tuoi ordini</a>
 <% } %>
 
 </body>

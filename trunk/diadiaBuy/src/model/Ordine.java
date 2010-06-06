@@ -1,5 +1,6 @@
 package model;
 
+import java.sql.Date;
 import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
@@ -40,6 +41,12 @@ public class Ordine {
 
 	public Calendar getData() {
 		return data;
+	}
+	
+	public Date toDate() {
+		long secs = this.data.getTimeInMillis();
+		return new Date(secs);
+		
 	}
 
 	public void setData(Calendar data) {

@@ -14,6 +14,8 @@ public interface OrdineDAO {
 
 	public List<Ordine> doRetrieveByCliente(Utente utente) throws PersistenceException;
 	
+	public Ordine doRetrieveById(int id) throws PersistenceException;
+	
 	public void update(Ordine ordine) throws PersistenceException;
 
 }

@@ -7,7 +7,7 @@ import model.DiadiaBuyFacade;
 import model.Ordine;
 import model.Utente;
 
-public class ConfermaAcquisto extends Azione {
+public class ConfermaAcquistoAction extends Azione {
 
 	@Override
 	public String esegui(HttpServletRequest request) {
