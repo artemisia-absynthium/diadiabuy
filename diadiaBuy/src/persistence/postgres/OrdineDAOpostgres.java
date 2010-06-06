@@ -34,10 +34,11 @@ public class OrdineDAOpostgres implements OrdineDAO {
 		this.prodottoDAO = new ProdottoDAOpostgres();
 	}
 
-	Ordine newOrdineFromResultSet(ResultSet result) throws SQLException {
+	Ordine newOrdineFromResultSet(Utente utente, ResultSet result) throws SQLException {
 		Ordine ordine = new Ordine();
 		ordine.setId(result.getInt("id_ordine"));
 		ordine.setCodice(result.getString("codice"));
+		ordine.setCliente(utente);
 		Calendar dataOrdine = Calendar.getInstance();
 		dataOrdine.setTime(result.getTimestamp("data"));
 		ordine.setStato(result.getString("stato"));
@@ -68,7 +69,7 @@ public class OrdineDAOpostgres implements OrdineDAO {
 			boolean endOfResult = false;
 			List<Ordine> ordini = new LinkedList<Ordine>();
 			while(!endOfResult && result.next()) {
-				Ordine ordine = this.newOrdineFromResultSet(result);
+				Ordine ordine = this.newOrdineFromResultSet(utente, result);
 				ordini.add(ordine);
 			}
 			return ordini;
@@ -96,7 +97,7 @@ public class OrdineDAOpostgres implements OrdineDAO {
 			connection.setAutoCommit(false);
 			connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
 			String query = "INSERT INTO ordini(id_ordine, codice, stato, data, id_utente) VALUES " +
-											 "(?,  		  ?,      ?,     ?,    ?)";
+											  "(?,  	   ?,      ?,     ?,    ?)";
 			statement = connection.prepareStatement(query);
 			statement.setInt(1, ordine.getId());
 			statement.setString(2, ordine.getCodice());
@@ -105,11 +106,12 @@ public class OrdineDAOpostgres implements OrdineDAO {
 			statement.setInt(5, ordine.getCliente().getId());
 			statement.execute();
 			
-			for (RigaOrdine riga : ordine.getRigheOrdine())
-				this.prodottoDAO.updateAvailability(connection, riga.getProdotto());
+			if(ordine.getStato().equals(Ordine.Stati.CHIUSO))
+				for (RigaOrdine riga : ordine.getRigheOrdine())
+					this.prodottoDAO.updateAvailability(connection, riga.getProdotto());
 			
 			for (RigaOrdine rigaOrdine : ordine.getRigheOrdine())
-				this.rigaOrdineDAO.persist(connection, rigaOrdine);
+				this.rigaOrdineDAO.persistOrUpdate(connection, rigaOrdine);
 			
 			connection.commit();
 		} catch (SQLException e) {
@@ -119,11 +121,55 @@ public class OrdineDAOpostgres implements OrdineDAO {
 				e1.printStackTrace();
 				throw new PersistenceException("Impossibile effettuare il rollback.", e1);
 			}
-			throw new PersistenceException("Impossibile inserire salvare l'ordine.", e);
+			throw new PersistenceException("Impossibile salvare l'ordine.", e);
 		} finally {
 			DBUtil.silentClose(null, statement, result);
 		}
 		System.out.println("Ordine salvato correttamente.");
 	}
 
+	public void update(Connection connection, Ordine ordine) throws PersistenceException {
+		PreparedStatement statement = null;
+		ResultSet result = null;
+		try {
+			connection.setAutoCommit(false);
+			connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+			String query = "UPDATE ordini " +
+					"		SET " +
+								"codice = ?, " +
+								"stato = ?, " +
+								"data = ?, " +
+								"id_utente = ?) " +
+							"WHERE id_ordine = ?";
+			statement = connection.prepareStatement(query);
+			statement.setString(1, ordine.getCodice());
+			statement.setString(2, ordine.getStato());
+			statement.setTimestamp(3, new Timestamp(ordine.getData().getTimeInMillis()));
+			statement.setInt(4, ordine.getCliente().getId());
+			statement.setInt(5, ordine.getId());
+			statement.execute();
+			
+			if(ordine.getStato().equals(Ordine.Stati.CHIUSO))
+				for (RigaOrdine riga : ordine.getRigheOrdine())
+					this.prodottoDAO.updateAvailability(connection, riga.getProdotto());
+			
+			for (RigaOrdine rigaOrdine : ordine.getRigheOrdine())
+				this.rigaOrdineDAO.persistOrUpdate(connection, rigaOrdine);
+			
+			connection.commit();
+		} catch (SQLException e) {
+			try {
+				connection.rollback();
+			} catch (SQLException e1) {
+				e1.printStackTrace();
+				throw new PersistenceException("Impossibile effettuare il rollback.", e1);
+			}
+			throw new PersistenceException("Impossibile salvare l'ordine.", e);
+		} finally {
+			DBUtil.silentClose(null, statement, result);
+		}
+		System.out.println("Ordine salvato correttamente.");
+	}
+
+	
 }

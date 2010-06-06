@@ -37,13 +37,43 @@ public class RigaOrdineDAOpostgres implements RigaOrdineDAO {
 	public void persist(RigaOrdine rigaOrdine) throws PersistenceException {
 		Connection connection = this.dataSource.getConnection();
 		try {
-			this.persist(connection, rigaOrdine);
+			this.persistOrUpdate(connection, rigaOrdine);
 		} finally {
 			DBUtil.silentClose(connection);
 		}
 	}
 
-	public void persist(Connection connection, RigaOrdine rigaOrdine) throws PersistenceException {
+	public void persistOrUpdate(Connection connection, RigaOrdine rigaOrdine) throws PersistenceException {
+		if(rigaOrdine.getId() == 0)
+			persist(connection, rigaOrdine);
+		else
+			update(connection, rigaOrdine);
+	}
+
+	private void update(Connection connection, RigaOrdine rigaOrdine) throws PersistenceException {
+		PreparedStatement statement = null;
+		try {
+			String query = "UPDATE righe_ordine " +
+							"SET " +
+								"numero_di_riga = ?, " +
+								"quantita = ?, " +
+								"nome_prodotto = ?" +
+							"WHERE id_riga_ordine = ?";
+			statement = connection.prepareStatement(query);
+			statement.setInt(1, rigaOrdine.getNumeroDiRiga());
+			statement.setInt(2, rigaOrdine.getQuantita());
+			statement.setString(3, rigaOrdine.getProdotto().getNome());
+			statement.setInt(6, rigaOrdine.getId());
+			statement.execute();
+		} catch (SQLException e) {
+			throw new PersistenceException("Impossibile inserire salvare il prodotto.", e);
+		} finally {
+			DBUtil.silentClose(null, statement);
+		}
+	}
+
+	public void persist(Connection connection, RigaOrdine rigaOrdine)
+			throws PersistenceException {
 		rigaOrdine.setId(this.idBroker.newId(IdBrokerPostgresql.RIGA_ORDINE_SEQUENCE_ID));
 		PreparedStatement statement = null;
 		try {

@@ -86,12 +86,16 @@ public class Utente {
 		return ordine;
 	}
 	
+	public Ordine newOrdine() {
+		return this.newOrdine(this.username + "_" + System.currentTimeMillis());
+	}
+	
 	public Ordine getCarrello() {
-		for (Ordine o : this.ordini) {
+		for (Ordine o : this.getOrdini()) {
 			if (o.getStato().equals(Ordine.Stati.APERTO))
 				return o;
 		}
-		return new Ordine();
+		return this.newOrdine();
 	}
 
 	@Override

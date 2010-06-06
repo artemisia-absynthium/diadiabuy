@@ -80,10 +80,14 @@ public class RigaOrdine {
 		return this.quantita <= this.getProdotto().getDisponibilita();
 	}
 	
+	public double getTotale() {
+		return this.getProdotto().getPrezzo() * this.getQuantita();
+	}
+	
 	void updateAvailability() {
 		if (!canUpdateAvailability())
 			throw new RuntimeException("La quantita' scelta di prodotto non e' disponibile in magazzino");
 		this.getProdotto().setDisponibilita(this.getProdotto().getDisponibilita()-this.quantita);
 	}
-
+	
 }

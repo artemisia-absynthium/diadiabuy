@@ -94,5 +94,16 @@ public class Prodotto {
 				+ ", descrizione=" + descrizione + ", fornitori=" + fornitori
 				+ "]";
 	}
+	
+	@Override
+	public int hashCode() {
+		return this.id;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		Prodotto that = (Prodotto) obj;
+		return this.id == that.id;
+	}
 
 }

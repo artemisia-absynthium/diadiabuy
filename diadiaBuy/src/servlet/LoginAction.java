@@ -13,8 +13,10 @@ public class LoginAction extends Azione {
 		DiadiaBuyFacade facade = DiadiaBuyFacade.getInstance();
 		Utente utente = facade.login(request);
 		
-		if (utente == null)
+		if (utente == null) {
+			request.setAttribute("messaggio", "Username o password errati");
 			return "nonLoggato";
+		}
 			
 		HttpSession session = request.getSession(false);
 		//Restituisce la sessione corrente, se non c'è, con false, non ne crea una nuova.
