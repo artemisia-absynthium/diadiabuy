@@ -57,13 +57,13 @@ public class RigaOrdineDAOpostgres implements RigaOrdineDAO {
 							"SET " +
 								"numero_di_riga = ?, " +
 								"quantita = ?, " +
-								"nome_prodotto = ?" +
+								"nome_prodotto = ? " +
 							"WHERE id_riga_ordine = ?";
 			statement = connection.prepareStatement(query);
 			statement.setInt(1, rigaOrdine.getNumeroDiRiga());
 			statement.setInt(2, rigaOrdine.getQuantita());
 			statement.setString(3, rigaOrdine.getProdotto().getNome());
-			statement.setInt(6, rigaOrdine.getId());
+			statement.setInt(4, rigaOrdine.getId());
 			statement.execute();
 		} catch (SQLException e) {
 			throw new PersistenceException("Impossibile inserire salvare il prodotto.", e);

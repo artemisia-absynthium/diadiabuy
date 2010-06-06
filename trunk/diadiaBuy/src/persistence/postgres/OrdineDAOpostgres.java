@@ -83,7 +83,7 @@ public class OrdineDAOpostgres implements OrdineDAO {
 	public void persist(Ordine ordine) throws PersistenceException {
 		Connection connection = this.dataSource.getConnection();
 		try {
-			persist(connection, ordine);
+			this.persist(connection, ordine);
 		} finally {
 			DBUtil.silentClose(connection);
 		}
@@ -127,6 +127,15 @@ public class OrdineDAOpostgres implements OrdineDAO {
 		}
 		System.out.println("Ordine salvato correttamente.");
 	}
+	
+	public void update(Ordine ordine) throws PersistenceException {
+		Connection connection = this.dataSource.getConnection();
+		try {
+			this.update(connection, ordine);
+		} finally {
+			DBUtil.silentClose(connection);
+		}
+	}
 
 	public void update(Connection connection, Ordine ordine) throws PersistenceException {
 		PreparedStatement statement = null;
@@ -135,11 +144,11 @@ public class OrdineDAOpostgres implements OrdineDAO {
 			connection.setAutoCommit(false);
 			connection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
 			String query = "UPDATE ordini " +
-					"		SET " +
+							"SET " +
 								"codice = ?, " +
 								"stato = ?, " +
 								"data = ?, " +
-								"id_utente = ?) " +
+								"id_utente = ? " +
 							"WHERE id_ordine = ?";
 			statement = connection.prepareStatement(query);
 			statement.setString(1, ordine.getCodice());

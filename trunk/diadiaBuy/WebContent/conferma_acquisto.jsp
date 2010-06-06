@@ -19,16 +19,17 @@
 
 <%@page import="model.Utente"%>
 <%@page import="model.Ordine"%>
+<%@page import="java.util.List"%>
 <%@page import="model.RigaOrdine"%>
-<%@page import="java.util.List"%><html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>DiaDiaBuy - Il tuo carrello</title>
+<title>DiaDiaBuy - Conferma il tuo acquisto</title>
 </head>
 <body>
 
 <% if (righe.isEmpty()) { /* Se il carrello è vuoto */ %>
-	<div>Il tuo carrello è ancora vuoto.</div>
+	<div>Non hai comprato niente, <a href="/diadiaBuy/consulta_prodotti.do">torna al catalogo.</a></div>
 <% } else { %>
 	<% for (RigaOrdine riga : righe) { %>
 		<div>
@@ -37,10 +38,9 @@
 			<span><%= riga.getTotale() %></span>
 		</div><br />
 	<% } %><br /><br />
-	<a href="conferma_acquisto.do">Procedi all'acquisto.</a>
+	<div>Totale: <%= carrello.getTotale() %></div><br /><br />
+	<a href="conferma_acquisto.do">Conferma acquisto</a>
 <% } %>
-
-<a href="/diadiaBuy/consulta_prodotti.do">Torna al catalogo</a>
 
 </body>
 </html>

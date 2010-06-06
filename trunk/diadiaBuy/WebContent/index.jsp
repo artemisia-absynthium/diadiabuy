@@ -15,8 +15,10 @@
 
 <h1>Benvenuto su DiaDiaBuy <% if (utente != null) { out.print(utente.getUsername()); } %></h1>
 
-<a href="/diadiaBuy/registrazione_utente.jsp">Registrati</a><br />
-<a href="/diadiaBuy/login.jsp">Entra</a><br />
+<% if (utente == null) { /* Collegamenti visibili solo agli utenti NON registrati/loggati */ %>
+	<a href="/diadiaBuy/registrazione_utente.jsp">Registrati</a><br />
+	<a href="/diadiaBuy/login.jsp">Entra</a><br />
+<% } %>
 <a href="/diadiaBuy/consulta_prodotti.do">Consulta il catalogo</a><br />
 
 <% if (utente != null) { /* Collegamenti visibili solo agli utenti registrati */ %>

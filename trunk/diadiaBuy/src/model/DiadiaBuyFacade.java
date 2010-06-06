@@ -99,9 +99,10 @@ public class DiadiaBuyFacade {
 
 	public void registraOrdine(Ordine ordine) {
 		try {
-			this.ordineDAO.persist(ordine);
+			ordine.chiudi();
+			this.ordineDAO.update(ordine);
 		} catch (PersistenceException e) {
-			System.err.println("Impossibile creare l'ordine.");
+			System.err.println("Impossibile chiudere l'ordine.");
 			e.printStackTrace();
 		}
 	}
@@ -154,10 +155,9 @@ public class DiadiaBuyFacade {
 			this.ordineDAO.persist(carrello);
 		} else {
 			/* il carrello è già persistito */
-			
+			this.ordineDAO.update(carrello);
 		}
  
-
 	}
 
 	public Utente login(HttpServletRequest request) {
