@@ -20,6 +20,10 @@
 	
 <span><%= StringUtils.normalizeNull(messaggio) %></span>
 
+<% if (utente != null) { /* Collegamenti visibili solo agli utenti registrati */ %>
+	<a href="/diadiaBuy/carrello.do">Consulta il tuo carrello</a>
+<% } %>
+
 <% for (Prodotto p : prodotti) { %>
 	<h1><%= p.getNome() %></h1>
 	<div><%= p.getPrezzo() %> euro<br />

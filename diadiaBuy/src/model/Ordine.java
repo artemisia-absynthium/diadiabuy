@@ -119,6 +119,14 @@ public class Ordine {
 				return riga;
 		return null;
 	}
+	
+	public double getTotale() {
+		double totale = 0;
+		for (RigaOrdine riga : this.getRigheOrdine())
+			totale += riga.getTotale();
+		return totale;
+			
+	}
 
 	@Override
 	public String toString() {
