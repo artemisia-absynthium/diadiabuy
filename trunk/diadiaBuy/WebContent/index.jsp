@@ -20,7 +20,7 @@
 <a href="/diadiaBuy/consulta_prodotti.do">Consulta il catalogo</a><br />
 
 <% if (utente != null) { /* Collegamenti visibili solo agli utenti registrati */ %>
-	<a href="/diadiaBuy/carrello.jsp">Consulta il tuo carrello</a>
+	<a href="/diadiaBuy/carrello.do">Consulta il tuo carrello</a>
 <% } %>
 
 </body>

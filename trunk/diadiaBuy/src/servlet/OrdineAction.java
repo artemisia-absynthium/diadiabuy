@@ -20,6 +20,7 @@ public class OrdineAction extends Azione {
 		DiadiaBuyFacade facade = DiadiaBuyFacade.getInstance();
 		try {
 			facade.aggiungiProdottoAlCarrello(utente, idProdotto, quantita);
+			request.setAttribute("messaggio", "Prodotto aggiunto al carrello");
 		} catch (PersistenceException e) {
 			e.printStackTrace();
 			return "prodottoNonAggiunto";

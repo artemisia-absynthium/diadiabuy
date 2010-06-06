@@ -3,8 +3,11 @@
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
-<%@page import="java.util.List, model.Prodotto"%>
-<%@page import="model.Utente"%><html xmlns="http://www.w3.org/1999/xhtml">
+<%@page import="java.util.List"%>
+<%@page import="model.Utente"%>
+<%@page import="web.util.StringUtils"%>
+<%@page import="model.Prodotto"%>
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>DiaDiaBuy - Catalogo</title>
@@ -12,7 +15,10 @@
 <% Utente utente = (Utente) session.getAttribute("utente"); %>
 <body>
 
-<% List<Prodotto> prodotti = (List<Prodotto>) request.getAttribute("prodotti"); %>
+<% 	List<Prodotto> prodotti = (List<Prodotto>) request.getAttribute("prodotti");
+	String messaggio = (String) request.getAttribute("messaggio"); %>
+	
+<span><%= StringUtils.normalizeNull(messaggio) %></span>
 
 <% for (Prodotto p : prodotti) { %>
 	<h1><%= p.getNome() %></h1>

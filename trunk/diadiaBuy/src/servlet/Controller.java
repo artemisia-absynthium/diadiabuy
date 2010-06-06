@@ -94,6 +94,7 @@ public class Controller extends HttpServlet {
 		this.comando2azione.put("conferma_registrazione", "servlet.ConfermaRegistrazioneUtenteAction");
 		this.comando2azione.put("login", "servlet.LoginAction");
 		this.comando2azione.put("aggiungi_al_carrello", "servlet.OrdineAction");
+		this.comando2azione.put("carrello", "servlet.CarrelloAction");
 		this.esito2pagina = new HashMap<String, String>();
 		this.esito2pagina.put("listaNonCreata", "/error.jsp");
 		this.esito2pagina.put("listaCreata", "/catalogo.jsp");
@@ -107,7 +108,8 @@ public class Controller extends HttpServlet {
 		this.esito2pagina.put("nonLoggato", "/login.jsp");
 		this.esito2pagina.put("loggato", "/index.jsp");
 		this.esito2pagina.put("prodottoNonAggiunto", "/error.jsp");
-		this.esito2pagina.put("prodottoAggiunto", "/carrello.jsp");
+		this.esito2pagina.put("prodottoAggiunto", "/consulta_prodotti.do");
+		this.esito2pagina.put("carrelloPreso", "/carrello.jsp");
 	}
 
 }

@@ -147,16 +147,22 @@ public class DiadiaBuyFacade {
 	public void aggiungiProdottoAlCarrello(Utente utente, int idProdotto,
 			int quantita) throws PersistenceException {
 		Ordine carrello = utente.getCarrello();
-
 		Prodotto prodotto = this.prodottoDAO.doRetrieveProdottoById(idProdotto);
-
 		carrello.aggiungiProdotto(prodotto, quantita);
-		this.ordineDAO.persist(carrello);
+		if(carrello.getId() == 0) {
+			/* il carrello non è persistito */
+			this.ordineDAO.persist(carrello);
+		} else {
+			/* il carrello è già persistito */
+			
+		}
+ 
+
 	}
 
 	public Utente login(HttpServletRequest request) {
 		Utente u = this.getUtente(request.getParameter("username"));
-		if (!u.isAuthorized(request))
+		if (u == null || !u.isAuthorized(request))
 			return null;
 		return u;
 	}
