@@ -80,6 +80,32 @@ public class OrdineDAOpostgres implements OrdineDAO {
 		}
 	}
 
+	@Override
+	public Ordine doRetrieveById(int id) throws PersistenceException {
+		Connection connection = this.dataSource.getConnection();
+		PreparedStatement statement = null;
+		ResultSet result = null;
+
+		try {
+			String query = 	"SELECT ordini.id_ordine, codice, stato, data, id_utente, id_prodotto, " +
+									" id_riga_ordine, quantita, numero_di_riga, nome_prodotto " +
+							"FROM ordini LEFT JOIN righe_ordine ON ordini.id_ordine = righe_ordine.id_ordine " +
+							"WHERE ordini.id_ordine = ? " +
+							"ORDER BY numero_di_riga";
+			statement = connection.prepareStatement(query);
+			statement.setInt(1, id);
+			result = statement.executeQuery();
+			if (!result.next())
+				return null;
+			Ordine ordine = this.newOrdineFromResultSet(null, result);
+			return ordine;
+		} catch (SQLException e) {
+			throw new PersistenceException("Impossibile caricare l'ordine.", e);
+		} finally {
+			DBUtil.silentClose(connection, statement, result);
+		}
+	}
+	
 	public void persist(Ordine ordine) throws PersistenceException {
 		Connection connection = this.dataSource.getConnection();
 		try {
@@ -179,6 +205,7 @@ public class OrdineDAOpostgres implements OrdineDAO {
 		}
 		System.out.println("Ordine salvato correttamente.");
 	}
+
 
 	
 }

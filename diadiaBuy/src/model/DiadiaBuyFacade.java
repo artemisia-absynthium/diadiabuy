@@ -159,6 +159,14 @@ public class DiadiaBuyFacade {
 		}
  
 	}
+	
+	public List<Ordine> getStorico(Utente utente) throws PersistenceException {
+		return this.ordineDAO.doRetrieveByCliente(utente);
+	}
+	
+	public Ordine getOrdine(int id) throws PersistenceException {
+		return this.ordineDAO.doRetrieveById(id);
+	}
 
 	public Utente login(HttpServletRequest request) {
 		Utente u = this.getUtente(request.getParameter("username"));
