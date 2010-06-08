@@ -99,7 +99,6 @@ public class CasiDUso {
 		System.out.println("UC6: Aggiungi Fornitore");
 		Utente admin = DIADIABUY_FACADE.getUtente("admin");
 		Fornitore fa_1 = new Fornitore("Fornitore_UC6", "Via Dei Campolli Ruspanti 6", "0000");
-		DIADIABUY_FACADE.newFornitore(admin, fa_1);
 		DIADIABUY_FACADE.aggiungiFornitore(admin, "PD_3", fa_1);
 	}
 	
@@ -130,7 +129,6 @@ public class CasiDUso {
 		DIADIABUY_FACADE.newProdotto(admin, pd_4);
 		
 		Fornitore f_1 = new Fornitore("Fornitore1", "Via Dei Campolli Ruspanti 4", "610");
-		DIADIABUY_FACADE.newFornitore(admin, f_1);
 		DIADIABUY_FACADE.aggiungiFornitore(admin, "PD_1", f_1);
 	}
 

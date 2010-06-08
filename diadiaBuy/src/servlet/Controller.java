@@ -98,6 +98,9 @@ public class Controller extends HttpServlet {
 		this.comando2azione.put("conferma_acquisto", "servlet.ConfermaAcquistoAction");
 		this.comando2azione.put("ordini", "servlet.StoricoOrdiniAction");
 		this.comando2azione.put("dettagli_ordine", "servlet.DettagliOrdineAction");
+		this.comando2azione.put("gestisci_fornitori", "servlet.CatalogoProdottiAdminAction");
+		this.comando2azione.put("inserisci_fornitore", "servlet.InserisciFornitoreAction");
+		this.comando2azione.put("elenco_fornitori", "servlet.FornitoriAction");
 		this.esito2pagina = new HashMap<String, String>();
 		this.esito2pagina.put("listaNonCreata", "/error.jsp");
 		this.esito2pagina.put("listaCreata", "/catalogo.jsp");
@@ -118,6 +121,12 @@ public class Controller extends HttpServlet {
 		this.esito2pagina.put("ordiniNonCaricati", "/error.jsp");
 		this.esito2pagina.put("dettagliOrdineNonCaricati", "/error.jsp");
 		this.esito2pagina.put("dettagliOrdineCaricati", "/dettagli_ordine.jsp");
+		this.esito2pagina.put("fornitoreNonInserito", "/error.jsp");
+		this.esito2pagina.put("fornitoreInserito", "/inserisci_fornitore.jsp");
+		this.esito2pagina.put("listaFornitoriNonCaricata", "/error.jsp");
+		this.esito2pagina.put("listaFornitoriCaricata", "/elenco_fornitori.jsp");
+		this.esito2pagina.put("listaxAdminNonCreata", "/error.jsp");
+		this.esito2pagina.put("listaxAdminCreata", "/catalogoxAdmin.jsp");
 	}
 
 }

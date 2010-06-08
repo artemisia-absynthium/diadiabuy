@@ -74,19 +74,6 @@ public class DiadiaBuyFacade {
 		}
 	}
 
-	public boolean newFornitore(Utente utente, Fornitore fornitore) {
-		this.onlyAdminCheck(utente);
-		try {
-			this.fornitoriDAO.persist(fornitore);
-			return true;
-		} catch (PersistenceException e) {
-			System.err.println("Creazione del fornitore" + fornitore
-					+ " fallita.");
-			e.printStackTrace();
-			return false;
-		}
-	}
-
 	public List<Prodotto> getCatalogo() throws PersistenceException {
 		return this.prodottoDAO.doRetrieveAll();
 	}
@@ -136,6 +123,7 @@ public class DiadiaBuyFacade {
 			Prodotto prodotto = this.prodottoDAO
 					.doRetrieveProdottoByCodice(codiceProdotto);
 			prodotto.aggiungiFornitore(fornitore);
+			this.fornitoriDAO.persist(fornitore);
 			this.fornitoriDAO.persistFornitura(fornitore, prodotto);
 			return true;
 		} catch (PersistenceException e) {
@@ -150,20 +138,20 @@ public class DiadiaBuyFacade {
 		Ordine carrello = utente.getCarrello();
 		Prodotto prodotto = this.prodottoDAO.doRetrieveProdottoById(idProdotto);
 		carrello.aggiungiProdotto(prodotto, quantita);
-		if(carrello.getId() == 0) {
+		if (carrello.getId() == 0) {
 			/* il carrello non è persistito */
 			this.ordineDAO.persist(carrello);
 		} else {
 			/* il carrello è già persistito */
 			this.ordineDAO.update(carrello);
 		}
- 
+
 	}
-	
+
 	public List<Ordine> getStorico(Utente utente) throws PersistenceException {
 		return this.ordineDAO.doRetrieveByCliente(utente);
 	}
-	
+
 	public Ordine getOrdine(int id) throws PersistenceException {
 		return this.ordineDAO.doRetrieveById(id);
 	}
