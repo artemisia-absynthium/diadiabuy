@@ -21,12 +21,13 @@
 <% } %>
 <a href="/diadiaBuy/consulta_prodotti.do">Consulta il catalogo</a><br />
 
-<% if (utente != null) { /* Collegamenti visibili solo agli utenti registrati */ %>
-	<a href="/diadiaBuy/carrello.do">Consulta il tuo carrello</a>
-	<a href="/diadiaBuy/ordini.do">Consulta il tuoi ordini</a>
+<% if (utente != null && !utente.isAdmin()) { /* Collegamenti visibili solo agli utenti registrati */ %>
+	<a href="/diadiaBuy/carrello.do">Consulta il tuo carrello</a><br />
+	<a href="/diadiaBuy/ordini.do">Consulta il tuoi ordini</a><br />
 <% } %>
 
 <% if (utente != null && utente.isAdmin()) { /* Collegamenti visibili solo agli amministratori */ %>
+	<a href="/diadiaBuy/inserimento_prodotto.jsp">Aggiungi un prodotto</a><br />
 	<a href="/diadiaBuy/gestisci_fornitori.do">Gestione fornitori</a>
 <% } %>
 
