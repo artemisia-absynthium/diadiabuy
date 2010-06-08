@@ -21,7 +21,7 @@
 %>
 <body>
 
-<h1 align="center">Registrazione Utente</h1>
+<h1>Registrazione Utente</h1>
 
 <form name="input" action="registrazione.do" method="post">
 	<div>
