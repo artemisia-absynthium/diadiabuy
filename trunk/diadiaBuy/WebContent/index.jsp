@@ -26,5 +26,9 @@
 	<a href="/diadiaBuy/ordini.do">Consulta il tuoi ordini</a>
 <% } %>
 
+<% if (utente != null && utente.isAdmin()) { /* Collegamenti visibili solo agli amministratori */ %>
+	<a href="/diadiaBuy/gestisci_fornitori.do">Gestione fornitori</a>
+<% } %>
+
 </body>
 </html>

@@ -108,7 +108,7 @@ public class FornitoriDAOpostgres implements FornitoriDAO {
 		ResultSet result = null;
 		try {
 			String query = "INSERT INTO fornitura(fornitore, prodotto) VALUES " +
-												"(?,            ?)";
+												"(?,         ?)";
 			statement = connection.prepareStatement(query);
 			statement.setInt(1, fornitore.getId());
 			statement.setInt(2, prodotto.getId());
