@@ -22,6 +22,7 @@
 <%@page import="model.RigaOrdine"%>
 <%@page import="java.util.List"%><html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<link rel="stylesheet" type="text/css" href="diadiabuy.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>DiaDiaBuy - Il tuo carrello</title>
 </head>
@@ -32,12 +33,13 @@
 <% } else { %>
 	<% for (RigaOrdine riga : righe) { %>
 		<div>
-			<span><%= riga.getNomeProdotto() %></span>
-			<span><%= riga.getQuantita() %></span>
-			<span><%= riga.getTotale() %></span>
+			<span class="name"><%= riga.getNomeProdotto() %></span>
+			<span>Quantità: <%= riga.getQuantita() %></span>
+			<span><%= riga.getTotale() %> euro</span>
 		</div><br />
-	<% } %><br /><br />
-	<a href="<%= response.encodeURL("/diadiaBuy/conferma_acquisto.do") %>">Procedi all'acquisto.</a><br />
+	<% } %>
+	<span>Totale: <%= carrello.getTotale() %> euro</span><br /><br />
+	<a href="<%= response.encodeURL("/diadiaBuy/conferma_acquisto.do") %>">Procedi all'acquisto</a><br />
 <% } %>
 
 <a href="<%= response.encodeURL("/diadiaBuy/consulta_prodotti.do") %>">Torna al catalogo</a>

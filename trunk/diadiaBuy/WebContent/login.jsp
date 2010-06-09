@@ -5,6 +5,7 @@
 
 <%@page import="web.util.StringUtils"%><html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<link rel="stylesheet" type="text/css" href="diadiabuy.css" />
 
 <% 
 	String messaggio = (String) request.getAttribute("messaggio");
