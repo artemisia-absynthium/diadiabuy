@@ -10,7 +10,7 @@
 <body>
 
 <h1>Solo gli amministratori possono entrare qui!</h1><br />
-<a href="/diadiaBuy/index.jsp">Torna alla home</a>
+<a href="<%= response.encodeURL("/diadiaBuy/index.jsp") %>">Torna alla home</a>
 
 </body>
 </html>

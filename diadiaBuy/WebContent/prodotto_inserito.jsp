@@ -11,7 +11,7 @@
 
 <h1>Prodotto inserito correttamente</h1>
 
-<a href="/diadiaBuy/index.jsp">Torna alla home</a>
+<a href="<%= response.encodeURL("/diadiaBuy/index.jsp") %>">Torna alla home</a>
 
 </body>
 </html>

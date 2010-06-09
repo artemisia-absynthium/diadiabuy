@@ -11,12 +11,14 @@
 	Utente utente = (Utente) session.getAttribute("utente");
 	if (utente == null || !utente.isAdmin()) {
 		out.clear();
-		RequestDispatcher rd = application.getRequestDispatcher("/diadiaBuy/notAuthorized.jsp");
+		RequestDispatcher rd = application.getRequestDispatcher(response.encodeURL("/diadiaBuy/notAuthorized.jsp"));
 		rd.forward(request, response);
 		return;
 	}
 	
 	List<Prodotto> prodotti = (List<Prodotto>) request.getAttribute("prodotti");
+	String encodedElencoURL = response.encodeURL("/diadiaBuy/elenco_fornitori.do");
+	String encodedInserisciURL = response.encodeURL("/diadiaBuy/inserisci_fornitore.jsp");
 %>
 
 <head>
@@ -27,11 +29,11 @@
 
 <% for (Prodotto p : prodotti) { %>
 	<h1><%= p.getNome() %></h1>
-	<form action="elenco_fornitori.do" method="post">
+	<form action="<%= encodedElencoURL %>" method="post">
 		<input type="hidden" value="<%= p.getCodice() %>" name="product_code" />
 		<input type="submit" value="Fornitori" />
 	</form>
-	<form action="inserisci_fornitore.jsp" method="post">
+	<form action="<%= encodedInserisciURL %>" method="post">
 		<input type="hidden" value="<%= p.getCodice() %>" name="product_code" />
 		<span><input type="submit" value="Inserisci fornitore" /></span>
 	</form>

@@ -30,7 +30,7 @@ public class InserisciProdottoAction extends Azione {
 		String codice = request.getParameter("codice");
 		String descrizione = request.getParameter("descrizione");
 		double prezzo = Double.parseDouble(request.getParameter("prezzo"));
-		int disponibilita = Integer.parseInt("disponibilita"); //FIXME ???
+		int disponibilita = Integer.parseInt(request.getParameter("disponibilita"));
 		Prodotto prodotto = new Prodotto(nome, codice, descrizione, prezzo, disponibilita);
 		if (!facade.newProdotto(utente, prodotto))
 			return "nonInserito";

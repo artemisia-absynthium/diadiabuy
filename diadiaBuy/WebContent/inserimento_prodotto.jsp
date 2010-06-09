@@ -13,7 +13,7 @@
 	Utente utente = (Utente) session.getAttribute("utente");
 	if (utente == null || !utente.isAdmin()) {
 		out.clear();
-		RequestDispatcher rd = application.getRequestDispatcher("/diadiaBuy/notAuthorized.jsp");
+		RequestDispatcher rd = application.getRequestDispatcher(response.encodeURL("/diadiaBuy/notAuthorized.jsp"));
 		rd.forward(request, response);
 		return;
 	}
@@ -27,6 +27,8 @@
 	if (errori == null) {
 		errori = new HashMap<String,String>();
 	}
+	
+	String encodedInserisciURL = response.encodeURL("/diadiaBuy/inserisci_prodotto.do");
 %>
 
 <head>
@@ -37,7 +39,7 @@
 
 <h1>Aggiungi un prodotto</h1>
 
-<form name="input" action="inserisci_prodotto.do" method="post">
+<form name="input" action="<%= encodedInserisciURL %>" method="post">
 	<div>
 		<% if (!errori.isEmpty()) { %>
 			<span class="errore"><%= messaggio %></span>

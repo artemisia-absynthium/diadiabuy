@@ -7,7 +7,7 @@
 	Utente utente = (Utente) session.getAttribute("utente");
 	if (utente == null || !utente.isAdmin()) {
 		out.clear();
-		RequestDispatcher rd = application.getRequestDispatcher("/diadiaBuy/notAuthorized.jsp");
+		RequestDispatcher rd = application.getRequestDispatcher(response.encodeURL("/diadiaBuy/notAuthorized.jsp"));
 		rd.forward(request, response);
 		return;
 	}
@@ -31,6 +31,8 @@
 		<span><%= fornitore.getTelefono() %></span>
 	</div><br />
 <% } %>
+
+<a href="<%= response.encodeURL("/diadiaBuy/gestisci_fornitori.do") %>">Torna indietro.</a>
 
 </body>
 </html>

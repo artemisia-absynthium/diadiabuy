@@ -9,8 +9,8 @@
 </head>
 <body>
 
-<h1 align="center">Complimenti, sei registrato!</h1>
-<p align="center"><a href="/diadiaBuy/index.jsp">Torna alla Home</a></p>
+<h1 align="center">Complimenti, sei registrato!</h1><br />
+<a href="<%= response.encodeURL("/diadiaBuy/index.jsp") %>">Torna alla Home</a>
 
 </body>
 </html>

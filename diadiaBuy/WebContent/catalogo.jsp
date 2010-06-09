@@ -15,26 +15,30 @@
 <% Utente utente = (Utente) session.getAttribute("utente"); %>
 <body>
 
-<% 	List<Prodotto> prodotti = (List<Prodotto>) request.getAttribute("prodotti");
-	String messaggio = (String) request.getAttribute("messaggio"); %>
+<% 	
+	List<Prodotto> prodotti = (List<Prodotto>) request.getAttribute("prodotti");
+	String messaggio = (String) request.getAttribute("messaggio");
+	String encodedDettagliURL = response.encodeURL("/diadiaBuy/dettagli.do");
+	String encodedCarrelloURL = response.encodeURL("/diadiaBuy/aggiungi_al_carrello.do");
+%>
 	
 <span><%= StringUtils.normalizeNull(messaggio) %></span>
 
 <% if (utente != null) { /* Collegamenti visibili solo agli utenti registrati */ %>
-	<a href="/diadiaBuy/carrello.do">Consulta il tuo carrello</a>
+	<a href="<%= response.encodeURL("/diadiaBuy/carrello.do") %>">Consulta il tuo carrello</a>
 <% } %>
 
 <% for (Prodotto p : prodotti) { %>
 	<h1><%= p.getNome() %></h1>
 	<div><%= p.getPrezzo() %> euro<br />
 	Disponibilità: <%= p.getDisponibilita() %><br />
-		<form action="/diadiaBuy/dettagli.do" method="post">
+		<form action="<%= encodedDettagliURL %>" method="post">
 			<input type="hidden" value="<%= p.getId() %>" name="product_id" />
 			<input type="submit" value="Dettagli" />
 		</form>
 		<% if (utente != null) { /* Collegamenti visibili solo agli utenti registrati */ %>
 			<div>
-				<form action="/diadiaBuy/aggiungi_al_carrello.do" method="post">
+				<form action="<%= encodedCarrelloURL %>" method="post">
 					<input type="hidden" value="<%= p.getId() %>" name="product_id" />
 					<input type="text" value="1" name="quantita" /> &nbsp;
 					<input type="submit" value="Aggiungi al carrello" />

@@ -17,13 +17,15 @@
 	Utente utente = (Utente) session.getAttribute("utente");
 	if (utente == null) {
 		out.clear();
-		RequestDispatcher rd = application.getRequestDispatcher("/diadiaBuy/login.jsp");
+		RequestDispatcher rd = application.getRequestDispatcher(response.encodeURL("/diadiaBuy/login.jsp"));
 		rd.forward(request, response);
 		return;
 	}
 	
 	List<Ordine> ordini = (List<Ordine>) request.getAttribute("ordini");
 	DateFormat dateFormat = new SimpleDateFormat();
+	
+	String encodedOrderURL = response.encodeURL("/diadiaBuy/dettagli_ordine.do");
 %>
 
 </head>
@@ -34,7 +36,7 @@
 		<span><%= dateFormat.format(ordine.toDate()) %></span>
 		<span><%= ordine.getTotale() %></span>
 		<span><%= ordine.getStato() %></span>
-		<form action="dettagli_ordine.do" method="post">
+		<form action="<%= encodedOrderURL %>" method="post">
 			<input type="hidden" value="<%= ordine.getId() %>" name="ordine_id" />
 			<input type="submit" value="Dettagli" />
 		</form>

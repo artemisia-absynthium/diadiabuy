@@ -6,14 +6,17 @@
 <%@page import="web.util.StringUtils"%><html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 
-<% String messaggio = (String) request.getAttribute("messaggio"); %>
+<% 
+	String messaggio = (String) request.getAttribute("messaggio");
+	String encodedLoginURL = response.encodeURL("/diadiaBuy/login.do");
+%>
 
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>DiaDiaBuy - Login</title>
 </head>
 <body>
 
-<form action="/diadiaBuy/login.do" method="post" name="login">
+<form action="<%= encodedLoginURL %>" method="post" name="login">
 	<span class="errore"><%= StringUtils.normalizeNull(messaggio) %></span><br /><br />
 	<div>
 		<span>Username: <input type="text" name="username" /></span><br />
