@@ -9,6 +9,7 @@
 <%@page import="model.Prodotto"%>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<link rel="stylesheet" type="text/css" href="diadiabuy.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>DiaDiaBuy - Catalogo</title>
 </head>
@@ -22,30 +23,29 @@
 	String encodedCarrelloURL = response.encodeURL("/diadiaBuy/aggiungi_al_carrello.do");
 %>
 	
-<span><%= StringUtils.normalizeNull(messaggio) %></span>
+<span><%= StringUtils.normalizeNull(messaggio) %></span><br /> 
 
 <% if (utente != null) { /* Collegamenti visibili solo agli utenti registrati */ %>
 	<a href="<%= response.encodeURL("/diadiaBuy/carrello.do") %>">Consulta il tuo carrello</a>
+	<br /><br />
 <% } %>
 
 <% for (Prodotto p : prodotti) { %>
-	<h1><%= p.getNome() %></h1>
-	<div><%= p.getPrezzo() %> euro<br />
-	Disponibilità: <%= p.getDisponibilita() %><br />
+	<span class="name"><%= p.getNome() %></span>
+	<span class="1"><%= p.getPrezzo() %> euro</span>
+	<span class="2">Disponibilità: <%= p.getDisponibilita() %></span>
 		<form action="<%= encodedDettagliURL %>" method="post">
 			<input type="hidden" value="<%= p.getId() %>" name="product_id" />
-			<input type="submit" value="Dettagli" />
+			<span class="3"><input type="submit" value="Dettagli" /></span>
 		</form>
 		<% if (utente != null) { /* Collegamenti visibili solo agli utenti registrati */ %>
-			<div>
 				<form action="<%= encodedCarrelloURL %>" method="post">
 					<input type="hidden" value="<%= p.getId() %>" name="product_id" />
-					<input type="text" value="1" name="quantita" /> &nbsp;
-					<input type="submit" value="Aggiungi al carrello" />
+					<span class="4"><input type="text" value="1" name="quantita" size="3" /> &nbsp;
+					<input type="submit" value="Aggiungi al carrello" /></span>
 				</form>
-			</div><br /><br />
 		<% } %>
-	</div>
+				<br /><br />
 <% } %>
 
 </body>

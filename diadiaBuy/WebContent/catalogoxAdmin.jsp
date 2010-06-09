@@ -22,13 +22,14 @@
 %>
 
 <head>
+<link rel="stylesheet" type="text/css" href="diadiabuy.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>DiaDiaBuy - Gestione fornitori</title>
 </head>
 <body>
 
 <% for (Prodotto p : prodotti) { %>
-	<h1><%= p.getNome() %></h1>
+	<h2><%= p.getNome() %></h2>
 	<form action="<%= encodedElencoURL %>" method="post">
 		<input type="hidden" value="<%= p.getCodice() %>" name="product_code" />
 		<input type="submit" value="Fornitori" />

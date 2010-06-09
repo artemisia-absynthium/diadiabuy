@@ -32,6 +32,7 @@
 %>
 
 <head>
+<link rel="stylesheet" type="text/css" href="diadiabuy.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>DiaDiaBuy - Aggiungi un prodotto</title>
 </head>

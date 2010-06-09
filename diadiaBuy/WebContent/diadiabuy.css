@@ -1,0 +1,42 @@
+@CHARSET "UTF-8";
+
+body { 
+	background-color: #FFFFFF;
+	background-image: url('/diadiaBuy/images/shopping_by_eduardogarciag.jpg');
+	background-repeat: no-repeat;
+	background-position: right top;
+	font-family: "Century Gothic", sans-serif;
+	color: purple;
+	}
+	
+h1 {
+	color: #9D88A9;
+	text-align: center;
+}
+
+span.name {
+	color: #9D88A9;
+	font-size: large;
+	font-weight: bold;
+}
+
+span.1 { 
+	text-indent: 100px;
+}
+
+span.2 { 
+	text-align: center;
+}
+
+span.3 { 
+	text-indent: 50px;
+}
+
+span.4 { 
+	text-indent: 50px;
+}
+
+a:link {color:purple; text-decoration:none;}      /* unvisited link */
+a:visited {color:purple; text-decoration:none;}  /* visited link */
+a:hover {color:#F9A3E4; text-decoration:underline;}  /* mouse over link */
+a:active {color:#F9A3E4; text-decoration:none;}  /* selected link */

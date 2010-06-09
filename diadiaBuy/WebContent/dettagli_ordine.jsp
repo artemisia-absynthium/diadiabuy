@@ -10,6 +10,7 @@
 <%@page import="java.text.DateFormat"%>
 <%@page import="java.text.SimpleDateFormat"%><html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<link rel="stylesheet" type="text/css" href="diadiabuy.css" />
 <%
 	Utente utente = (Utente) session.getAttribute("utente");
 	if (utente == null) {

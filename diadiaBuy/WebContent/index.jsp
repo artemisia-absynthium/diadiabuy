@@ -7,6 +7,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<link rel="stylesheet" type="text/css" href="diadiabuy.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>DiaDiaBuy</title>
 </head>
