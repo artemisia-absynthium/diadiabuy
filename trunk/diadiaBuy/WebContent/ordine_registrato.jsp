@@ -12,7 +12,7 @@
 <h1>Grazie per l'acquisto!</h1>
 <div>Il tuo ordine è stato registrato con successo.</div>
 
-<a href="/diadiaBuy/index.jsp">Torna alla home</a>
+<a href="<%= response.encodeURL("/diadiaBuy/index.jsp") %>">Torna alla home</a>
 
 </body>
 </html>

@@ -7,7 +7,7 @@
 	Utente utente = (Utente) session.getAttribute("utente");
 	if (utente == null) {
 		out.clear();
-		RequestDispatcher rd = application.getRequestDispatcher("/diadiaBuy/login.jsp");
+		RequestDispatcher rd = application.getRequestDispatcher(response.encodeURL("/diadiaBuy/login.jsp"));
 		rd.forward(request, response);
 		return;
 	}
@@ -29,7 +29,7 @@
 <body>
 
 <% if (righe.isEmpty()) { /* Se il carrello è vuoto */ %>
-	<div>Non hai comprato niente, <a href="/diadiaBuy/consulta_prodotti.do">torna al catalogo.</a></div>
+	<div>Non hai comprato niente, <a href="<%= response.encodeURL("/diadiaBuy/consulta_prodotti.do") %>">torna al catalogo.</a></div>
 <% } else { %>
 	<% for (RigaOrdine riga : righe) { %>
 		<div>
@@ -39,7 +39,7 @@
 		</div><br />
 	<% } %><br /><br />
 	<div>Totale: <%= carrello.getTotale() %></div><br /><br />
-	<a href="conferma_acquisto.do">Conferma acquisto</a>
+	<a href="<%= response.encodeURL("/diadiaBuy/conferma_acquisto.do") %>">Conferma acquisto</a>
 <% } %>
 
 </body>

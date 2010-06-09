@@ -11,14 +11,16 @@
 	String username = request.getParameter("username");
 	String password = request.getParameter("password");
 	String indirizzo = request.getParameter("indirizzo");
+	
+	String encodedConfermaURL = response.encodeURL("/diadiaBuy/conferma_registrazione.do");
 %>
 <body>
 
-<h1 align="center">Conferma la tua registrazione</h1>
+<h1>Conferma la tua registrazione</h1>
 	
 	<h2>I tuoi dati sono:</h2>
 		
-	<form name="input" action="conferma_registrazione.do" method="post">
+	<form name="input" action="<%= encodedConfermaURL %>" method="post">
 		<div>
 			<span>Nome: <input type="text" readonly="readonly" name="username" value="<%= username %>" size="20" /></span><br />		
 			<input type="hidden" name="password" value="<%= password %>" />

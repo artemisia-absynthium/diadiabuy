@@ -7,7 +7,7 @@
 	Utente utente = (Utente) session.getAttribute("utente");
 	if (utente == null || !utente.isAdmin()) {
 		out.clear();
-		RequestDispatcher rd = application.getRequestDispatcher("/diadiaBuy/notAuthorized.jsp");
+		RequestDispatcher rd = application.getRequestDispatcher(response.encodeURL("/diadiaBuy/notAuthorized.jsp"));
 		rd.forward(request, response);
 		return;
 	}
@@ -15,6 +15,7 @@
 	String messaggio = (String) request.getAttribute("messaggio");
 	String code = request.getParameter("product_code");
 	
+	String encodedInserisciURL = response.encodeURL("/diadiaBuy/inserisci_fornitore.do");
 %>
 
 <%@page import="web.util.StringUtils"%>
@@ -28,7 +29,7 @@
 
 <h1>Inserisci fornitore</h1><br /><br />
 <span><%= StringUtils.normalizeNull(messaggio) %></span><br /><br />
-<form action="inserisci_fornitore.do" method="post">
+<form action="<%= encodedInserisciURL %>" method="post">
 	<input type="hidden" value="<%= code %>" name="product_code" />
 	<span>Nome: <input type="text" value="" name="nome_fornitore" /></span><br />
 	<span>Indirizzo: <input type="text" value="" name="indirizzo_fornitore" /></span><br />
@@ -37,7 +38,7 @@
 	<span><input type="reset" value="Reset" /></span>
 </form>
 
-<a href="/diadiaBuy/gestisci_fornitori.do">Torna indietro.</a>
+<a href="<%= response.encodeURL("/diadiaBuy/gestisci_fornitori.do") %>">Torna indietro.</a>
 
 </body>
 </html>

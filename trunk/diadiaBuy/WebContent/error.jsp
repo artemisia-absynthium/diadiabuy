@@ -11,7 +11,7 @@
 
 <h1>Oops! Qualcosa è andato storto!</h1>
 
-Prova a tornare alla <a href="/diadiaBuy/index.jsp">home</a>!
+Prova a tornare alla <a href="<%= response.encodeURL("/diadiaBuy/index.jsp") %>">home</a>!
 
 </body>
 </html>

@@ -68,7 +68,7 @@ public class Controller extends HttpServlet {
 			}
 		}
 		ServletContext application = getServletContext();
-		RequestDispatcher rd = application.getRequestDispatcher(prossimaPagina);
+		RequestDispatcher rd = application.getRequestDispatcher(response.encodeURL(prossimaPagina));
 		rd.forward(request, response);
 	}
 	

@@ -18,12 +18,14 @@
 	if (errori == null) {
 		errori = new HashMap<String,String>();
 	}
+	
+	String encodedRegURL = response.encodeURL("/diadiaBuy/registrazione.do");
 %>
 <body>
 
 <h1>Registrazione Utente</h1>
 
-<form name="input" action="registrazione.do" method="post">
+<form name="input" action="<%= encodedRegURL %>" method="post">
 	<div>
 		<% if (!errori.isEmpty()) { %>
 			<span class="errore"><%= messaggio %></span>

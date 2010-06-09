@@ -14,7 +14,7 @@
 	Utente utente = (Utente) session.getAttribute("utente");
 	if (utente == null) {
 		out.clear();
-		RequestDispatcher rd = application.getRequestDispatcher("/diadiaBuy/login.jsp");
+		RequestDispatcher rd = application.getRequestDispatcher(response.encodeURL("/diadiaBuy/login.jsp"));
 		rd.forward(request, response);
 		return;
 	}
@@ -37,6 +37,8 @@
 	</div><br />
 <% } %><br /><br />
 Totale: <%= ordine.getTotale() %>
+
+<a href="<%= response.encodeURL("/diadiaBuy/ordini.do") %>">Torna all'elenco degli ordini</a>
 
 </body>
 </html>
