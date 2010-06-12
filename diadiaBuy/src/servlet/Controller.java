@@ -102,6 +102,7 @@ public class Controller extends HttpServlet {
 		this.comando2azione.put("inserisci_fornitore", "servlet.InserisciFornitoreAction");
 		this.comando2azione.put("elenco_fornitori", "servlet.FornitoriAction");
 		this.comando2azione.put("inserisci_prodotto", "servlet.InserisciProdottoAction");
+		this.comando2azione.put("logout", "servlet.LogoutAction");
 		this.esito2pagina = new HashMap<String, String>();
 		this.esito2pagina.put("listaNonCreata", "/error.jsp");
 		this.esito2pagina.put("listaCreata", "/catalogo.jsp");
@@ -130,6 +131,7 @@ public class Controller extends HttpServlet {
 		this.esito2pagina.put("listaxAdminCreata", "/catalogoxAdmin.jsp");
 		this.esito2pagina.put("nonInserito", "/inserimento_prodotto.jsp");
 		this.esito2pagina.put("inserito", "/prodotto_inserito.jsp");
+		this.esito2pagina.put("logout", "/index.jsp");
 	}
 
 }

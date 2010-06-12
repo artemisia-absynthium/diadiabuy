@@ -19,6 +19,8 @@
 <% if (utente == null) { /* Collegamenti visibili solo agli utenti NON registrati/loggati */ %>
 	<a href="/diadiaBuy/registrazione_utente.jsp">Registrati</a><br />
 	<a href="/diadiaBuy/login.jsp">Entra</a><br />
+<% } else { /* Se sei loggato... */ %>
+	<a href="/diadiaBuy/logout.do">Esci</a><br />	
 <% } %>
 
 <a href="<%= response.encodeURL("/diadiaBuy/consulta_prodotti.do") %>">Consulta il catalogo</a><br />
