@@ -44,10 +44,12 @@ public class OrdineDAOpostgres implements OrdineDAO {
 		ordine.setStato(result.getString("stato"));
 		ordine.setData(dataOrdine);
 		List<RigaOrdine> righeOrdine = new LinkedList<RigaOrdine>();
-		do {
+		while(result.getInt("id_ordine") == ordine.getId()) {
 			RigaOrdine rigaOrdine = this.rigaOrdineDAO.newRigaOrdine(ordine, result);
 			righeOrdine.add(rigaOrdine);
-		} while(result.next());
+			if(!result.next())
+				break;
+		}
 		ordine.setRigheOrdine(righeOrdine);
 		return ordine;
 	}
@@ -66,9 +68,10 @@ public class OrdineDAOpostgres implements OrdineDAO {
 			statement = connection.prepareStatement(query);
 			statement.setInt(1, utente.getId());
 			result = statement.executeQuery();
-			boolean endOfResult = false;
 			List<Ordine> ordini = new LinkedList<Ordine>();
-			while(!endOfResult && result.next()) {
+			if(!result.next())
+				return ordini;
+			while(!result.isAfterLast()) {
 				Ordine ordine = this.newOrdineFromResultSet(utente, result);
 				ordini.add(ordine);
 			}

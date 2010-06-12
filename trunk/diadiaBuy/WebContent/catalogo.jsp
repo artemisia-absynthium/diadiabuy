@@ -31,7 +31,7 @@
 <% } %>
 
 <% for (Prodotto p : prodotti) { %>
-	<span class="name"><%= p.getNome() %></span>
+	<div><span class="name"><%= p.getNome() %></span>
 	<span class="1"><%= p.getPrezzo() %> euro</span>
 	<span class="2">Disponibilità: <%= p.getDisponibilita() %></span>
 		<form action="<%= encodedDettagliURL %>" method="post">
@@ -45,7 +45,8 @@
 					<input type="submit" value="Aggiungi al carrello" /></span>
 				</form>
 		<% } %>
-				<br /><br />
+		</div>
+		<br /><br />
 <% } %>
 
 </body>
