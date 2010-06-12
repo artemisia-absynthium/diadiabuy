@@ -209,6 +209,61 @@ public class OrdineDAOpostgres implements OrdineDAO {
 		System.out.println("Ordine salvato correttamente.");
 	}
 
+	@Override
+	public List<Ordine> doRetrieveByStato(String chiuso)
+			throws PersistenceException {
+		Connection connection = this.dataSource.getConnection();
+		PreparedStatement statement = null;
+		ResultSet result = null;
 
+		try {
+			String query = 	"SELECT   ordini.id_ordine, codice, stato, data, id_utente, id_prodotto, " +
+									" id_riga_ordine, quantita, numero_di_riga, nome_prodotto " +
+							"FROM ordini LEFT JOIN righe_ordine ON ordini.id_ordine = righe_ordine.id_ordine " +
+							"WHERE stato = ? " +
+							"ORDER BY id_ordine, numero_di_riga";
+			statement = connection.prepareStatement(query);
+			statement.setString(1, chiuso);
+			result = statement.executeQuery();
+			List<Ordine> ordini = new LinkedList<Ordine>();
+			if(!result.next())
+				return ordini;
+			while(!result.isAfterLast()) {
+				Ordine ordine = this.newOrdineFromResultSet(null, result);
+				ordini.add(ordine);
+			}
+			return ordini;
+		} catch (SQLException e) {
+			throw new PersistenceException("Impossibile inserire salvare l'ordine.", e);
+		} finally {
+			DBUtil.silentClose(connection, statement, result);
+		}
+	}
+
+	@Override
+	public void updateState(Ordine ordine) throws PersistenceException {
+		Connection connection = this.dataSource.getConnection();
+		PreparedStatement statement = null;
+		ResultSet result = null;
+		try {
+			String query = "UPDATE ordini " +
+							"SET " +
+								"stato = ? " +
+							"WHERE id_ordine = ?";
+			statement = connection.prepareStatement(query);
+			statement.setString(1, ordine.getStato());
+			statement.setInt(2, ordine.getId());
+			statement.execute();
+						
+			for (RigaOrdine rigaOrdine : ordine.getRigheOrdine())
+				this.rigaOrdineDAO.persistOrUpdate(connection, rigaOrdine);
+			
+		} catch (SQLException e) {
+			throw new PersistenceException("Impossibile evadere l'ordine.", e);
+		} finally {
+			DBUtil.silentClose(connection, statement, result);
+		}
+		System.out.println("Ordine evaso correttamente.");		
+	}
 	
 }

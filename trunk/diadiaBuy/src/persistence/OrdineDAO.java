@@ -18,4 +18,8 @@ public interface OrdineDAO {
 	
 	public void update(Ordine ordine) throws PersistenceException;
 
+	public List<Ordine> doRetrieveByStato(String chiuso) throws PersistenceException;
+	
+	public void updateState(Ordine ordine) throws PersistenceException;
+
 }
