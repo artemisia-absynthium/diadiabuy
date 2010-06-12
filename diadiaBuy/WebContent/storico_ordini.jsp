@@ -13,16 +13,8 @@
 <link rel="stylesheet" type="text/css" href="diadiabuy.css" />
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <title>DiaDiaBuy - I tuoi ordini</title>
-
-<%
-	Utente utente = (Utente) session.getAttribute("utente");
-	if (utente == null) {
-		out.clear();
-		RequestDispatcher rd = application.getRequestDispatcher(response.encodeURL("/diadiaBuy/login.jsp"));
-		rd.forward(request, response);
-		return;
-	}
-	
+<%@include file="checklogged.jspf" %>
+<%	
 	List<Ordine> ordini = (List<Ordine>) request.getAttribute("ordini");
 	DateFormat dateFormat = new SimpleDateFormat();
 	

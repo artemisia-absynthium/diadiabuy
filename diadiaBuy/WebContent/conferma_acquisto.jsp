@@ -2,16 +2,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<%
-	Utente utente = (Utente) session.getAttribute("utente");
-	if (utente == null) {
-		out.clear();
-		RequestDispatcher rd = application.getRequestDispatcher(response.encodeURL("/diadiaBuy/login.jsp"));
-		rd.forward(request, response);
-		return;
-	}
-	
+<%@include file="checklogged.jspf" %>
+<%	
 	Ordine carrello = (Ordine) request.getAttribute("carrello");
 	List<RigaOrdine> righe = carrello.getRigheOrdine();
 %>

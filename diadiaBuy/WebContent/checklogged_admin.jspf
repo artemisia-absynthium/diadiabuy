@@ -1,0 +1,12 @@
+<%@page import="model.Utente"%>
+
+<% 
+	Utente utente = (Utente) session.getAttribute("utente");
+	if (utente == null || ! utente.isAdmin()) {
+		out.clear();
+		RequestDispatcher rd = application.getRequestDispatcher(response.encodeURL("/notAuthorized.jsp"));
+		rd.forward(request, response);
+		return;
+	}
+
+	%>

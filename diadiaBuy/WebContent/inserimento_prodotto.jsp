@@ -8,16 +8,8 @@
 <%@page import="java.util.HashMap"%>
 <%@page import="web.util.StringUtils"%>
 <%@page import="org.apache.commons.codec.digest.DigestUtils"%><html xmlns="http://www.w3.org/1999/xhtml">
-
+<%@include file="checklogged_admin.jspf" %>
 <%
-	Utente utente = (Utente) session.getAttribute("utente");
-	if (utente == null || !utente.isAdmin()) {
-		out.clear();
-		RequestDispatcher rd = application.getRequestDispatcher(response.encodeURL("/diadiaBuy/notAuthorized.jsp"));
-		rd.forward(request, response);
-		return;
-	}
-	
 	final String messaggio = "Riempire la form correttamente";
 	String nome = request.getParameter("nome");
 	String descrizione = request.getParameter("descrizione");

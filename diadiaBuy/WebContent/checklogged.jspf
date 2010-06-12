@@ -1,0 +1,12 @@
+<%@page import="model.Utente"%>
+
+<% 
+	Utente utente = (Utente) session.getAttribute("utente");
+	if (utente == null) {
+		out.clear();
+		RequestDispatcher rd = application.getRequestDispatcher(response.encodeURL("/diadiaBuy/notAuthorized.jsp"));
+		rd.forward(request, response);
+		return;
+	}
+
+	%>
