@@ -7,15 +7,8 @@
 <%@page import="java.util.List"%>
 <%@page import="model.Prodotto"%><html xmlns="http://www.w3.org/1999/xhtml">
 
+<%@include file="checklogged_admin.jspf" %>
 <%
-	Utente utente = (Utente) session.getAttribute("utente");
-	if (utente == null || !utente.isAdmin()) {
-		out.clear();
-		RequestDispatcher rd = application.getRequestDispatcher(response.encodeURL("/diadiaBuy/notAuthorized.jsp"));
-		rd.forward(request, response);
-		return;
-	}
-	
 	List<Prodotto> prodotti = (List<Prodotto>) request.getAttribute("prodotti");
 	String encodedElencoURL = response.encodeURL("/diadiaBuy/elenco_fornitori.do");
 	String encodedInserisciURL = response.encodeURL("/diadiaBuy/inserisci_fornitore.jsp");

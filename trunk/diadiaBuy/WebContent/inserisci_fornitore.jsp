@@ -2,16 +2,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
+<%@include file="checklogged_admin.jspf" %>
 <%
-	Utente utente = (Utente) session.getAttribute("utente");
-	if (utente == null || !utente.isAdmin()) {
-		out.clear();
-		RequestDispatcher rd = application.getRequestDispatcher(response.encodeURL("/diadiaBuy/notAuthorized.jsp"));
-		rd.forward(request, response);
-		return;
-	}
-	
 	String messaggio = (String) request.getAttribute("messaggio");
 	String code = request.getParameter("product_code");
 	

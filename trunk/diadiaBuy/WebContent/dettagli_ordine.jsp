@@ -11,15 +11,8 @@
 <%@page import="java.text.SimpleDateFormat"%><html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <link rel="stylesheet" type="text/css" href="diadiabuy.css" />
+<%@include file="checklogged.jspf" %>
 <%
-	Utente utente = (Utente) session.getAttribute("utente");
-	if (utente == null) {
-		out.clear();
-		RequestDispatcher rd = application.getRequestDispatcher(response.encodeURL("/diadiaBuy/login.jsp"));
-		rd.forward(request, response);
-		return;
-	}
-	
 	Ordine ordine = (Ordine) request.getAttribute("ordine");
 	List<RigaOrdine> righe = ordine.getRigheOrdine();
 	DateFormat dateFormat = new SimpleDateFormat();
