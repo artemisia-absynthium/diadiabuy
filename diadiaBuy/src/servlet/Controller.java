@@ -103,6 +103,8 @@ public class Controller extends HttpServlet {
 		this.comando2azione.put("elenco_fornitori", "servlet.FornitoriAction");
 		this.comando2azione.put("inserisci_prodotto", "servlet.InserisciProdottoAction");
 		this.comando2azione.put("logout", "servlet.LogoutAction");
+		this.comando2azione.put("ordini_chiusi", "servlet.OrdiniChiusiAction");
+		this.comando2azione.put("evadi", "servlet.EvadiOrdineAction");
 		this.esito2pagina = new HashMap<String, String>();
 		this.esito2pagina.put("listaNonCreata", "/error.jsp");
 		this.esito2pagina.put("listaCreata", "/catalogo.jsp");
@@ -132,6 +134,10 @@ public class Controller extends HttpServlet {
 		this.esito2pagina.put("nonInserito", "/inserimento_prodotto.jsp");
 		this.esito2pagina.put("inserito", "/prodotto_inserito.jsp");
 		this.esito2pagina.put("logout", "/index.jsp");
+		this.esito2pagina.put("ordiniChiusiNonCaricati", "/error.jsp");
+		this.esito2pagina.put("ordiniChiusiCaricati", "/ordini_chiusi.jsp");
+		this.esito2pagina.put("ordineNonEvaso", "/error.jsp");
+		this.esito2pagina.put("ordineEvaso", "/ordini_chiusi.do");
 	}
 
 }

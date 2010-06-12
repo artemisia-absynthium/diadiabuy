@@ -163,4 +163,14 @@ public class DiadiaBuyFacade {
 		return u;
 	}
 
+	public List<Ordine> getOrdiniChiusi() throws PersistenceException {
+		return this.ordineDAO.doRetrieveByStato(Ordine.Stati.CHIUSO);
+	}
+	
+	public void evadiOrdine(int id) throws PersistenceException {
+		Ordine ordine = this.ordineDAO.doRetrieveById(id);
+		ordine.evadi();
+		this.ordineDAO.updateState(ordine);
+	}
+
 }

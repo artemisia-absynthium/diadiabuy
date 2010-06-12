@@ -32,7 +32,8 @@
 
 <% if (utente != null && utente.isAdmin()) { /* Collegamenti visibili solo agli amministratori */ %>
 	<a href="<%= response.encodeURL("/diadiaBuy/inserimento_prodotto.jsp") %>">Aggiungi un prodotto</a><br />
-	<a href="<%= response.encodeURL("/diadiaBuy/gestisci_fornitori.do") %>">Gestione fornitori</a>
+	<a href="<%= response.encodeURL("/diadiaBuy/gestisci_fornitori.do") %>">Gestione fornitori</a><br />
+	<a href="<%= response.encodeURL("/diadiaBuy/ordini_chiusi.do") %>">Evadi ordini</a>	
 <% } %>
 
 </body>
