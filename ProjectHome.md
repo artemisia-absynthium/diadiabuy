@@ -1,0 +1,1 @@
+Sistema informativo di una piccola azienda di compravendita.
